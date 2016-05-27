@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+<LinearLayout
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.example.guangchengfan.myview.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+    <Button
+        android:text="静态fragment页面"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_static"
+        android:layout_marginBottom="10dp"/>
+
+
+    <Button
+        android:text="动态fragment页面"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_dynamic"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="tabhost页面"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_tabhost"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="fragment生命周期，动态添加"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_dynamic_life_add"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="fragment生命周期，动态replace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_dynamic_life_replace"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="fragment生命周期，xml静态添加"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_static_life"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="viewpager 的fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_viewpager"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="startActivityForResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_for_result"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="startLeakActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_leak_activity"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="startShowDialogActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_show_dialog_activity"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="打开动画测试页面"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_anim_activity"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="打开除法小数点页面"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_div_activity"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="打开recycle view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_recycle_view_activity"
+        android:layout_marginBottom="10dp"/>
+</LinearLayout>
+</ScrollView>
