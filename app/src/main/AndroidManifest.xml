@@ -15,8 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StaticActivity" />
-        <activity android:name=".DynamicActivity" />
+        <activity android:name=".fragment.StaticActivity" />
+        <activity android:name=".fragment.DynamicActivity" />
         <activity android:name=".tabhost.TabHostActivity" />
         <activity android:name=".life.DynamicLifeActivity" />
         <activity android:name=".life.StaticLifeActivity" />
@@ -27,10 +27,11 @@
         <activity android:name=".show_dialog.ShowDialogActivity" />
         <activity android:name=".animation.AnimActivity" />
         <activity
-            android:name=".DivActivty"
+            android:name=".basic.DivActivty"
             android:label="@string/title_activity_div_activty"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".recycleview.RecycleActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".recycleview.RecycleActivity" />
+        <activity android:name=".customview.hotLabel.HotLabelActivity"></activity>
     </application>
 
 </manifest>

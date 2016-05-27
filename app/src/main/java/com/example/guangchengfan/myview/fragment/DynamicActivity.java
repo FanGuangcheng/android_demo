@@ -1,8 +1,10 @@
-package com.example.guangchengfan.myview;
+package com.example.guangchengfan.myview.fragment;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+
+import com.example.guangchengfan.myview.R;
 import com.example.guangchengfan.myview.fragment.Fragment1;
 import com.example.guangchengfan.myview.fragment.Fragment2;
 

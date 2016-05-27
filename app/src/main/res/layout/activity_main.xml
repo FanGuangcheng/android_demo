@@ -110,5 +110,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_start_recycle_view_activity"
         android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="打开flow_layout 热门标签"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_hot_label_activity"
+        android:layout_marginBottom="10dp"/>
 </LinearLayout>
 </ScrollView>

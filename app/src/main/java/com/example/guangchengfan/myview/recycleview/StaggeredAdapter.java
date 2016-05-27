@@ -5,21 +5,23 @@ package com.example.guangchengfan.myview.recycleview;
  */
 
 import java.util.List;
+
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.guangchengfan.myview.R;
 
-public class BrandRecycleAdapter extends RecyclerView.Adapter<BrandRecycleAdapter.ItemViewHolder> {
+public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.ItemViewHolder> {
     private List<Item> items;
+    private int mSelectItemIndex = 0;
     //点击监听事件
     public interface OnRecyclerViewItemClickListener{
-        void onClick(View view,int position);
+        void onClick(View view, int position);
     };
     private OnRecyclerViewItemClickListener listener;
     //设置监听器
@@ -27,8 +29,9 @@ public class BrandRecycleAdapter extends RecyclerView.Adapter<BrandRecycleAdapte
         this.listener = listener;
     }
     //构造函数，将数据赋值给成员变量
-    public BrandRecycleAdapter(List<Item> items) {
+    public StaggeredAdapter(List<Item> items, int selectIndex) {
         this.items = items;
+        mSelectItemIndex = selectIndex;
     }
     //获得数据大小
     @Override
@@ -49,22 +52,31 @@ public class BrandRecycleAdapter extends RecyclerView.Adapter<BrandRecycleAdapte
         Item item = items.get(position);
         viewHolder.title.setText(item.getTitle());
 
-        viewHolder.itemView.setOnClickListener(new OnClickListener() {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             //如果监听器非空，则回调
             @Override
             public void onClick(View v) {
                 if (listener!=null) {
                     listener.onClick(viewHolder.itemView, position);
                 }
-
             }
         });
+
+        if (position == mSelectItemIndex){
+            viewHolder.title.setTextColor(Color.RED);
+        }
+        else {
+            viewHolder.title.setTextColor(Color.BLACK);
+        }
     }
+
+    public void setSelectIndex(int index) {
+        mSelectItemIndex = index;
+    }
+
     //ViewHolder，用于缓存，提高效率
     public final static class ItemViewHolder extends RecyclerView.ViewHolder {
-        //每一项的四个控件
         TextView title;
-
         public ItemViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);

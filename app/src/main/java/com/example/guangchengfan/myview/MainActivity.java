@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.guangchengfan.myview.animation.AnimActivity;
+import com.example.guangchengfan.myview.basic.DivActivty;
+import com.example.guangchengfan.myview.customview.hotLabel.HotLabelActivity;
+import com.example.guangchengfan.myview.fragment.DynamicActivity;
+import com.example.guangchengfan.myview.fragment.StaticActivity;
 import com.example.guangchengfan.myview.life.DynamicLifeActivity;
 import com.example.guangchengfan.myview.life.StaticLifeActivity;
 import com.example.guangchengfan.myview.recycleview.RecycleActivity;
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btn_start_anim_activity;
     Button btn_start_div_activity;
     Button btn_start_recycle_view_activity;
+    Button btn_hot_label_activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_start_div_activity.setOnClickListener(this);
         btn_start_recycle_view_activity = (Button) findViewById(R.id.btn_start_recycle_view_activity);
         btn_start_recycle_view_activity.setOnClickListener(this);
+        btn_hot_label_activity = (Button) findViewById(R.id.btn_hot_label_activity);
+        btn_hot_label_activity.setOnClickListener(this);
 
     }
 
@@ -107,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_start_recycle_view_activity:
                 startRecycleViewActivty();
+                break;
+            case R.id.btn_hot_label_activity:
+                starthotLabelActivty();
                 break;
             default:
                 break;
@@ -186,6 +196,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startRecycleViewActivty() {
         Intent intent = new Intent();
         intent.setClass(this, RecycleActivity.class);
+        startActivity(intent);
+    }
+
+    private void starthotLabelActivty() {
+        Intent intent = new Intent();
+        intent.setClass(this, HotLabelActivity.class);
         startActivity(intent);
     }
 }

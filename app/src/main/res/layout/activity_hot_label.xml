@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.guangchengfan.myview.customview.hotLabel.HotLabelActivity"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_simple_flow_layout"
+        android:text="展示第一种flow_layout 热门标签"/>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_second_flow_layout"
+        android:text="展示第二种flow_layout 热门标签"/>
+
+    <com.example.guangchengfan.myview.customview.hotLabel.SimpleFlowLayout
+        android:id="@+id/simple_flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="gone">
+    </com.example.guangchengfan.myview.customview.hotLabel.SimpleFlowLayout>
+    <com.example.guangchengfan.myview.customview.hotLabel.FlowLayout
+        android:id="@+id/second_flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="gone">
+    </com.example.guangchengfan.myview.customview.hotLabel.FlowLayout>
+
+</LinearLayout>

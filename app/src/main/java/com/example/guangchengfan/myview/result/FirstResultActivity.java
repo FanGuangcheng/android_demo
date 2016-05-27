@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.guangchengfan.myview.R;
-import com.example.guangchengfan.myview.StaticActivity;
 
 public class FirstResultActivity extends Activity implements View.OnClickListener {
     public static final String ACTIVITY_RESULT_TAG = "activity_result_tag";

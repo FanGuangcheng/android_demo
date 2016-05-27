@@ -1,4 +1,4 @@
-package com.example.guangchengfan.myview;
+package com.example.guangchengfan.myview.basic;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.guangchengfan.myview.R;
 
 import java.math.BigDecimal;
 

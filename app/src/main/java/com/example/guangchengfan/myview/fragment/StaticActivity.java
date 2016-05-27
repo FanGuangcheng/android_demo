@@ -1,7 +1,9 @@
-package com.example.guangchengfan.myview;
+package com.example.guangchengfan.myview.fragment;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.guangchengfan.myview.R;
 
 public class StaticActivity extends AppCompatActivity {
 
