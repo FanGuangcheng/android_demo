@@ -29,7 +29,7 @@
         <activity
             android:name=".DivActivty"
             android:label="@string/title_activity_div_activty"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".recycleview.RecycleActivity"></activity>
     </application>
 
