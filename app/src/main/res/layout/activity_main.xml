@@ -117,5 +117,27 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_hot_label_activity"
         android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="打开popwindow "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_pop_window"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="super toast  界面"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_super_toast"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:text="启动 textview 界面"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_textview_activity"
+        android:layout_marginBottom="10dp"/>
+
 </LinearLayout>
 </ScrollView>

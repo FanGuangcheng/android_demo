@@ -13,10 +13,13 @@ import com.example.guangchengfan.myview.fragment.DynamicActivity;
 import com.example.guangchengfan.myview.fragment.StaticActivity;
 import com.example.guangchengfan.myview.life.DynamicLifeActivity;
 import com.example.guangchengfan.myview.life.StaticLifeActivity;
+import com.example.guangchengfan.myview.pop.PopupWindowsActivity;
 import com.example.guangchengfan.myview.recycleview.RecycleActivity;
 import com.example.guangchengfan.myview.result.FirstResultActivity;
 import com.example.guangchengfan.myview.show_dialog.ShowDialogActivity;
+import com.example.guangchengfan.myview.supertoast.activity.SuperToastActivity;
 import com.example.guangchengfan.myview.tabhost.TabHostActivity;
+import com.example.guangchengfan.myview.textview.TextviewActivity;
 import com.example.guangchengfan.myview.viewpager.ViewPagerActivity;
 import com.example.guangchengfan.myview.window_leak.LeakActivity;
 
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btn_start_div_activity;
     Button btn_start_recycle_view_activity;
     Button btn_hot_label_activity;
+    Button btn_pop_window;
+    Button btn_start_super_toast;
+    Button btn_start_textview_activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +76,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_start_recycle_view_activity.setOnClickListener(this);
         btn_hot_label_activity = (Button) findViewById(R.id.btn_hot_label_activity);
         btn_hot_label_activity.setOnClickListener(this);
-
+        btn_pop_window = (Button) findViewById(R.id.btn_pop_window);
+        btn_pop_window.setOnClickListener(this);
+        btn_start_super_toast = (Button) findViewById(R.id.btn_start_super_toast);
+        btn_start_super_toast.setOnClickListener(this);
+        btn_start_textview_activity = (Button) findViewById(R.id.btn_start_textview_activity);
+        btn_start_textview_activity.setOnClickListener(this);
     }
 
     @Override
@@ -117,6 +128,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_hot_label_activity:
                 starthotLabelActivty();
+                break;
+            case R.id.btn_pop_window:
+                startPopWindowActivty();
+                break;
+            case R.id.btn_start_super_toast:
+                startSuperToastActivity();
+                break;
+            case R.id.btn_start_textview_activity:
+                startTextviewActivity();
                 break;
             default:
                 break;
@@ -204,4 +224,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setClass(this, HotLabelActivity.class);
         startActivity(intent);
     }
+
+    private void startPopWindowActivty() {
+        Intent intent = new Intent();
+        intent.setClass(this, PopupWindowsActivity.class);
+        startActivity(intent);
+    }
+
+    private void startSuperToastActivity() {
+        Intent intent = new Intent();
+        intent.setClass(this, SuperToastActivity.class);
+        startActivity(intent);
+    }
+
+    private void startTextviewActivity() {
+        Intent intent = new Intent();
+        intent.setClass(this, TextviewActivity.class);
+        startActivity(intent);
+    }
+
 }

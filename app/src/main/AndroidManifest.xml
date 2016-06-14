@@ -31,7 +31,10 @@
             android:label="@string/title_activity_div_activty"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".recycleview.RecycleActivity" />
-        <activity android:name=".customview.hotLabel.HotLabelActivity"></activity>
+        <activity android:name=".customview.hotLabel.HotLabelActivity" />
+        <activity android:name=".pop.PopupWindowsActivity" />
+        <activity android:name=".supertoast.activity.SuperToastActivity" />
+        <activity android:name=".textview.TextviewActivity"></activity>
     </application>
 
 </manifest>
