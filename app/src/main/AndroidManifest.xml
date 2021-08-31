@@ -8,8 +8,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OldMainActivity"></activity>
-        <activity android:name=".MainActivity2021"></activity>
+        <activity android:name=".view.TouchDelegateActivity"></activity>
+        <activity android:name=".OldMainActivity" />
+        <activity android:name=".MainActivity2021" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

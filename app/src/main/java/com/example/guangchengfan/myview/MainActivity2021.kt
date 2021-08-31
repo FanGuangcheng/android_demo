@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import com.example.guangchengfan.myview.view.TouchDelegateActivity
 
 /**
  * @author :fgc
@@ -17,7 +18,7 @@ class MainActivity2021: Activity() {
 
         btn_small_icon = findViewById(R.id.btn_small_icon)
         btn_small_icon.setOnClickListener {
-            // todo fgc 跳转到小图标扩区区域页面
+            startTargetActivity(TouchDelegateActivity::class.java)
         }
     }
 
