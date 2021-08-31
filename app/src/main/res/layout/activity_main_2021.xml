@@ -13,12 +13,18 @@
         android:orientation="vertical"
         tools:context="com.example.guangchengfan.myview.OldMainActivity">
 
-
         <Button
             android:text="小图标，扩大点击区域"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_small_icon"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:text="activity 销毁重建"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_restore_activity"
             android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
