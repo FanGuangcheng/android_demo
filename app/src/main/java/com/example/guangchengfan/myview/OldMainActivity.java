@@ -23,7 +23,7 @@ import com.example.guangchengfan.myview.textview.TextviewActivity;
 import com.example.guangchengfan.myview.viewpager.ViewPagerActivity;
 import com.example.guangchengfan.myview.window_leak.LeakActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class OldMainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btn_static;
     Button btn_dynamic;

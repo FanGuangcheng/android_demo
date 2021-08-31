@@ -5,11 +5,9 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.guangchengfan.myview.MainActivity;
+import com.example.guangchengfan.myview.OldMainActivity;
 import com.example.guangchengfan.myview.R;
 
 public class DynamicLifeActivity extends Activity {
@@ -25,7 +23,7 @@ public class DynamicLifeActivity extends Activity {
         Intent intent  = getIntent();
         boolean isAdd = true;
         if (intent != null && intent.getExtras() != null)
-            isAdd = intent.getExtras().getBoolean(MainActivity.IS_ADD_FRAGMENT, true);
+            isAdd = intent.getExtras().getBoolean(OldMainActivity.IS_ADD_FRAGMENT, true);
         LifeFragment lifeFragment = new LifeFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("key", 111);
