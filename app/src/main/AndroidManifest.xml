@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.RestoreActivity"></activity>
+        <activity android:name=".constraintlayout.ConstraintLayoutActivity"></activity>
+        <activity android:name=".activity.RestoreActivity" />
         <activity android:name=".view.TouchDelegateActivity" />
         <activity android:name=".OldMainActivity" />
         <activity android:name=".MainActivity2021" />

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import com.example.guangchengfan.myview.activity.RestoreActivity
+import com.example.guangchengfan.myview.constraintlayout.ConstraintLayoutActivity
 import com.example.guangchengfan.myview.view.TouchDelegateActivity
 
 /**
@@ -14,6 +15,7 @@ import com.example.guangchengfan.myview.view.TouchDelegateActivity
 class MainActivity2021: Activity() {
     lateinit var btn_small_icon: Button
     lateinit var btn_restore_activity: Button
+    lateinit var btn_constraint_layout: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_2021)
@@ -26,6 +28,11 @@ class MainActivity2021: Activity() {
         btn_restore_activity = findViewById(R.id.btn_restore_activity)
         btn_restore_activity.setOnClickListener {
             startTargetActivity(RestoreActivity::class.java)
+        }
+
+        btn_constraint_layout = findViewById(R.id.btn_constraint_layout)
+        btn_constraint_layout.setOnClickListener {
+            startTargetActivity(ConstraintLayoutActivity::class.java)
         }
     }
 
