@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.guangchengfan.myview.R
 
+/**
+ *  Android 关于Activity的销毁和重建
+ *  https://www.jianshu.com/p/067209fd887d
+ */
 class RestoreActivity : AppCompatActivity() {
     private val TAG = "RestoreActivity"
     private val TIME_STAMP = "time_stamp"
