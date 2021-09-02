@@ -1,6 +1,3 @@
-# android_demo
-demo for study android fgc
-
 知识库：
 
 * 1、Android和H5交互——JsBridge：
@@ -45,3 +42,15 @@ demo for study android fgc
 	浅谈ClickableSpan ， 实现TextView文本某一部分文字的点击响应（超链接）
 	LinkMovementMethod.getInstance()
 	https://www.cnblogs.com/xqxacm/p/5127877.html
+
+* 7、Lottie动画使用
+	https://juejin.cn/post/6844903661760413704
+
+* 8、view的测量、布局、绘制讲解 郭林： Android自定义View的实现方法，带你一步步深入了解View
+	https://blog.csdn.net/guolin_blog/article/details/12921889
+	https://blog.csdn.net/guolin_blog/article/details/16330267
+	https://blog.csdn.net/guolin_blog/article/details/17045157
+	https://blog.csdn.net/guolin_blog/article/details/17357967
+
+	Android控件进阶-自定义流式布局和热门标签控件	
+	http://www.demodashi.com/demo/14686.html
