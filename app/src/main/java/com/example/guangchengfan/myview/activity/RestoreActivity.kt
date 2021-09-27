@@ -1,7 +1,7 @@
 package com.example.guangchengfan.myview.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import com.example.guangchengfan.myview.R
 

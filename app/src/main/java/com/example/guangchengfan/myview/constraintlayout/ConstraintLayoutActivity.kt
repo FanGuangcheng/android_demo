@@ -1,6 +1,7 @@
 package com.example.guangchengfan.myview.constraintlayout
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
 import com.example.guangchengfan.myview.R
 

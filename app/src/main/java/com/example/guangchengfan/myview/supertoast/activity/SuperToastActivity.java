@@ -1,9 +1,10 @@
 package com.example.guangchengfan.myview.supertoast.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guangchengfan.myview.R;
 import com.example.guangchengfan.myview.supertoast.util.ToastHelper;

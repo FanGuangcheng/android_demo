@@ -2,9 +2,10 @@ package com.example.guangchengfan.myview.viewpager;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;

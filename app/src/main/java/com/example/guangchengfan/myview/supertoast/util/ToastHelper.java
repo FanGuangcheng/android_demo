@@ -17,6 +17,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+
 /**
  * Custom Toast
  *
@@ -109,9 +112,9 @@ public class ToastHelper {
             }
         });
 
-        mWindowParams.gravity = android.support.v4.view.GravityCompat
+        mWindowParams.gravity = GravityCompat
                 .getAbsoluteGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
-                        android.support.v4.view.ViewCompat
+                        ViewCompat
                                 .getLayoutDirection(toastView));
         removeView();
         mWindowManager.addView(toastView, mWindowParams);

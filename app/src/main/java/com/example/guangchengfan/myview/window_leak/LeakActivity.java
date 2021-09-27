@@ -1,7 +1,6 @@
 package com.example.guangchengfan.myview.window_leak;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 

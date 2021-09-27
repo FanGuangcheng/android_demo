@@ -2,12 +2,12 @@ package com.example.guangchengfan.myview.view
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.TouchDelegate
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.guangchengfan.myview.R
 
 

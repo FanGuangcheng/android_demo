@@ -1,12 +1,13 @@
 package com.example.guangchengfan.myview.textview;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guangchengfan.myview.R;
 
