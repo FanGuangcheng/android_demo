@@ -5,6 +5,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.guangchengfan.myview.R
 import com.google.zxing.integration.android.IntentIntegrator
+import android.widget.Toast
+
+import com.google.zxing.integration.android.IntentResult
+
+import android.content.Intent
+
+
+
 
 /**
  * @author :fgc
@@ -18,11 +26,22 @@ class QrCodeActivity : AppCompatActivity() {
 
     fun onQrBtnClick(view : View) {
         IntentIntegrator(this)
-            .setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES)// 扫码的类型,可选：一维码，二维码，一/二维码
-            .setPrompt("请对准二维码")// 设置提示语
-            .setCameraId(0)// 选择摄像头,可使用前置或者后置
-            .setBeepEnabled(false)// 是否开启声音,扫完码之后会"哔"的一声
-            .setBarcodeImageEnabled(true)// 扫完码之后生成二维码的图片
+            .setPrompt("请对准二维码1")// 设置提示语
             .initiateScan();// 初始化扫码
+    }
+
+
+    // Get the results:
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }
