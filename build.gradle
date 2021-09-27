@@ -9,6 +9,9 @@ buildscript {
         maven {
             url 'https://maven.google.com/'
         }
+        maven {
+            url 'https://developer.huawei.com/repo/'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.0'
@@ -35,6 +38,9 @@ allprojects {
 
         maven {
             url 'https://jitpack.io/'
+        }
+        maven {
+            url 'https://developer.huawei.com/repo/'
         }
 
     }
