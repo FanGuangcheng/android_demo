@@ -10,8 +10,8 @@ import android.widget.Toast
 import com.google.zxing.integration.android.IntentResult
 
 import android.content.Intent
-
-
+import android.net.Uri
+import com.google.zxing.qrcode.QRCodeReader
 
 
 /**
@@ -28,7 +28,9 @@ class QrCodeActivity : AppCompatActivity() {
         IntentIntegrator(this)
             .setPrompt("请对准二维码1")// 设置提示语
             .initiateScan();// 初始化扫码
+        QrCodeScanUtil.scanImg(this)
     }
+
 
 
     // Get the results:
