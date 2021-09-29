@@ -1,14 +1,20 @@
 package com.example.guangchengfan.myview.qrcode
 
+import android.content.ContentResolver
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.guangchengfan.myview.R
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Rect
+import android.net.Uri
 import android.provider.MediaStore
 import android.text.TextUtils
 import com.huawei.hms.hmsscankit.ScanUtil
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions
+import java.io.FileNotFoundException
 import java.io.IOException
 
 /**
@@ -39,8 +45,8 @@ class QrCodeActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_PHOTO) {
             try {
-                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, data?.data)
-                QrCodeScanUtil.scanImg(this, bitmap)
+//                val bitmap = getBitmap(this.contentResolver, data?.data)
+                QrCodeScanUtil.scanImg(this, data?.data)
 
 //                val hmsScans = ScanUtil.decodeWithBitmap(this@QrCodeActivity, bitmap, HmsScanAnalyzerOptions.Creator().setPhotoMode(true).create())
 //                if (hmsScans != null && hmsScans.size > 0 && hmsScans[0] != null && !TextUtils.isEmpty(hmsScans[0]!!.getOriginalValue())) {
@@ -55,5 +61,18 @@ class QrCodeActivity : AppCompatActivity() {
         }
     }
 
+    @Throws(FileNotFoundException::class, IOException::class)
+    fun getBitmap(cr: ContentResolver, url: Uri?): Bitmap {
+
+        val input = cr.openInputStream(url)
+        val options = BitmapFactory.Options()
+
+        options.inSampleSize = 2
+        val rect = Rect()
+        val bitmap = BitmapFactory.decodeStream(input, null, options)
+//        val bitmap = BitmapFactory.decodeStream(input)
+        input.close()
+        return bitmap
+    }
 
 }
