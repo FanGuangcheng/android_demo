@@ -16,6 +16,8 @@ public class TextviewActivity extends AppCompatActivity {
     private static final int TV_TIPS_RECOM_WIDTH = 200;
 
     TextView tvTips;
+    TextView tv_line_space_test;
+    // 去除Android默认的行间距设置：文档：https://segmentfault.com/a/1190000021947194
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class TextviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_textview);
 
         tvTips = (TextView)findViewById(R.id.tv_tips);
+        tv_line_space_test = (TextView)findViewById(R.id.tv_line_space_test);
 
         Log.d("TextviewActivity", "1: " + getJustifyStr("最新拼团订单来自济宁市的mama_1F0Q1E849", tvTips));
         Log.d("TextviewActivity", "2: " + getJustifyStr("最新拼团订单来自连云港市的曦潇研", tvTips));
@@ -32,6 +35,8 @@ public class TextviewActivity extends AppCompatActivity {
         Log.d("TextviewActivity", "6: " + getJustifyStr("最新拼团订单来自铜仁市的宇妈_33", tvTips));
         Log.d("TextviewActivity", "7: " + getJustifyStr("最新拼团订单来自郴州市的mama_21FOIF", tvTips));
         Log.d("TextviewActivity", "8: " + getJustifyStr("最新拼团订单来自北京市的肆意的贪婪丶只因你宠爱", tvTips));
+
+        TextviewUtil.setCustomText("123454894654这是行间距为负数的情况!dasdasdasdasd这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!dasdasfgjfgjfgj这是行间1213213dasdasdasd距为负数的情况!这是行间距为负数的情况qweryutoasdasjkflgzxcbm,vm,!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!", tv_line_space_test);
 
     }
 

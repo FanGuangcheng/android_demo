@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_constraint_layout.xml" value="0.11195542046605876" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main_2021.xml" value="0.11879432624113476" />
         <entry key="app/src/main/res/layout/activity_qrcode.xml" value="0.11879432624113476" />
         <entry key="app/src/main/res/layout/activity_restore.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_textview.xml" value="0.16576086956521738" />
         <entry key="app/src/main/res/layout/activity_view_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/recycle_filter.xml" value="0.1" />
         <entry key="app/src/main/res/layout/staggered_grid_layout.xml" value="0.1" />
