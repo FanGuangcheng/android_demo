@@ -41,5 +41,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_qrcode_activity"
             android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:text="BRVAHRecycleViewActivity 通用adapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_brvah_recycle_view"
+            android:layout_marginBottom="10dp"/>
+
+
     </LinearLayout>
 </ScrollView>
