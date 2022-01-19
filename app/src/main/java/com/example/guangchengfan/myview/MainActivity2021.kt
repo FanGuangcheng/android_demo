@@ -20,6 +20,7 @@ class MainActivity2021: Activity() {
     lateinit var btn_constraint_layout: Button
     lateinit var btn_qrcode_activity: Button
     lateinit var btn_brvah_recycle_view: Button
+    //test
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
