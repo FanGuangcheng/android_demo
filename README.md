@@ -32,8 +32,6 @@
 
 	ConstraintLayout示例集锦
 	https://juejin.cn/post/6844903877372837902
-	
-	
 
 
 * 6、TextView 富文本和超链接点击
@@ -45,27 +43,34 @@
 	LinkMovementMethod.getInstance()
 	https://www.cnblogs.com/xqxacm/p/5127877.html
 
-	
-	
 * 7、Lottie动画使用
 	https://juejin.cn/post/6844903661760413704
 
-	
-	
-* 8、view的测量、布局、绘制讲解 
-	
-	郭林： Android自定义View的实现方法，带你一步步深入了解View
+* 8、view的测量、布局、绘制讲解 	郭林： Android自定义View的实现方法，带你一步步深入了解View
 	https://blog.csdn.net/guolin_blog/article/details/12921889
 	https://blog.csdn.net/guolin_blog/article/details/16330267
 	https://blog.csdn.net/guolin_blog/article/details/17045157
 	https://blog.csdn.net/guolin_blog/article/details/17357967
-	
-	Android控件进阶-自定义流式布局和热门标签控件	
+
+	Android控件进阶-自定义流式布局和热门标签控件
 	http://www.demodashi.com/demo/14686.html
 
-* 9、Android网络测试与诊断
-    https://juejin.cn/post/6844903919412330510
-    https://github.com/guxiaonian/HttpInfo
-    
-    Android网络收集和ping封装库
-    https://juejin.cn/post/6871204208918396935
+*9、AndroidStudio 这些技巧你知道嘛?
+	https://juejin.cn/post/7018000719047294990
+
+
+*10、给 Android 开发者的 RxJava 详解
+https://gank.io/post/560e15be2dca930e00da1083
+
+*11、Gradle 与 Android 构建入门
+https://mp.weixin.qq.com/s/HdCrhiY3VSsEjmu0FKLlyg
+
+*12、关于 Gradle 你应该知道的知识点
+https://juejin.cn/post/7064350945756332040?share_token=cdd7d785-86bf-418d-a524-59e8a352a53f
+
+
+*13、玩转AppBarLayout，更酷炫的顶部栏
+https://www.jianshu.com/p/d159f0176576
+
+*14、CoordinatorLayout的使用如此简单
+https://blog.csdn.net/huachao1001/article/details/51554608
