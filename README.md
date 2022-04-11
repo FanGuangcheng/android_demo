@@ -55,22 +55,22 @@
 	Android控件进阶-自定义流式布局和热门标签控件
 	http://www.demodashi.com/demo/14686.html
 
-*9、AndroidStudio 这些技巧你知道嘛?
+* 9、AndroidStudio 这些技巧你知道嘛?
 	https://juejin.cn/post/7018000719047294990
 
 
-*10、给 Android 开发者的 RxJava 详解
+* 10、给 Android 开发者的 RxJava 详解
 https://gank.io/post/560e15be2dca930e00da1083
 
-*11、Gradle 与 Android 构建入门
+* 11、Gradle 与 Android 构建入门
 https://mp.weixin.qq.com/s/HdCrhiY3VSsEjmu0FKLlyg
 
-*12、关于 Gradle 你应该知道的知识点
+* 12、关于 Gradle 你应该知道的知识点
 https://juejin.cn/post/7064350945756332040?share_token=cdd7d785-86bf-418d-a524-59e8a352a53f
 
 
-*13、玩转AppBarLayout，更酷炫的顶部栏
+* 13、玩转AppBarLayout，更酷炫的顶部栏
 https://www.jianshu.com/p/d159f0176576
 
-*14、CoordinatorLayout的使用如此简单
+* 14、CoordinatorLayout的使用如此简单
 https://blog.csdn.net/huachao1001/article/details/51554608
