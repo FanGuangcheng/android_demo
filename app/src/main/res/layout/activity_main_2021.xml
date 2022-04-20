@@ -49,6 +49,12 @@
             android:id="@+id/btn_brvah_recycle_view"
             android:layout_marginBottom="10dp"/>
 
+        <Button
+            android:text="CoordinatorLayout 协调布局之Behavior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_coor_behavior"
+            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
 </ScrollView>

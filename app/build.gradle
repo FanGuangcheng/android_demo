@@ -35,4 +35,5 @@ dependencies {
     implementation 'com.huawei.hms:scanplus:2.1.0.300'
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
+    implementation 'com.google.android.material:material:1.4.0'
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.guangchengfan.myview.activity.RestoreActivity
 import com.example.guangchengfan.myview.constraintlayout.ConstraintLayoutActivity
+import com.example.guangchengfan.myview.coordinatorlayout.CoorDinatorBehaviorActivity
 import com.example.guangchengfan.myview.qrcode.QrCodeActivity
 import com.example.guangchengfan.myview.recycleview.BRVAH.BRVAHRecycleViewActivity
 import com.example.guangchengfan.myview.view.TouchDelegateActivity
@@ -20,6 +21,7 @@ class MainActivity2021: Activity() {
     lateinit var btn_constraint_layout: Button
     lateinit var btn_qrcode_activity: Button
     lateinit var btn_brvah_recycle_view: Button
+    lateinit var btn_coor_behavior: Button
     //test
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,10 @@ class MainActivity2021: Activity() {
         btn_brvah_recycle_view = findViewById(R.id.btn_brvah_recycle_view)
         btn_brvah_recycle_view.setOnClickListener {
             startTargetActivity(BRVAHRecycleViewActivity::class.java)
+        }
+        btn_coor_behavior = findViewById(R.id.btn_coor_behavior)
+        btn_coor_behavior.setOnClickListener {
+            startTargetActivity(CoorDinatorBehaviorActivity::class.java)
         }
     }
 
