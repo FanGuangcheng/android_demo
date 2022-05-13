@@ -50,6 +50,7 @@
         <activity android:name=".supertoast.activity.SuperToastActivity" />
         <activity android:name=".textview.TextviewActivity" />
         <activity android:name=".recycleview.BRVAH.BRVAHRecycleViewActivity" />
+        <activity android:name=".customview.SlidingTabLayout.SlidingTabLayoutActivity"/>
     </application>
 
 </manifest>

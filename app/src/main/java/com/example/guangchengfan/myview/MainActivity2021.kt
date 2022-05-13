@@ -7,6 +7,7 @@ import android.widget.Button
 import com.example.guangchengfan.myview.activity.RestoreActivity
 import com.example.guangchengfan.myview.constraintlayout.ConstraintLayoutActivity
 import com.example.guangchengfan.myview.coordinatorlayout.CoorDinatorBehaviorActivity
+import com.example.guangchengfan.myview.customview.SlidingTabLayout.SlidingTabLayoutActivity
 import com.example.guangchengfan.myview.qrcode.QrCodeActivity
 import com.example.guangchengfan.myview.recycleview.BRVAH.BRVAHRecycleViewActivity
 import com.example.guangchengfan.myview.view.TouchDelegateActivity
@@ -22,7 +23,7 @@ class MainActivity2021: Activity() {
     lateinit var btn_qrcode_activity: Button
     lateinit var btn_brvah_recycle_view: Button
     lateinit var btn_coor_behavior: Button
-    //test
+    lateinit var btn_sliding_tab_layout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +56,11 @@ class MainActivity2021: Activity() {
         btn_coor_behavior.setOnClickListener {
             startTargetActivity(CoorDinatorBehaviorActivity::class.java)
         }
+        btn_sliding_tab_layout = findViewById(R.id.btn_sliding_tab_layout)
+        btn_sliding_tab_layout.setOnClickListener {
+            startTargetActivity(SlidingTabLayoutActivity::class.java)
+        }
+
     }
 
     private fun startTargetActivity(cls : Class<*>) {

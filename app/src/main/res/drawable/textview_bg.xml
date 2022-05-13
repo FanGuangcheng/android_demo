@@ -9,4 +9,8 @@
         android:bottom="5dp"
         />
 
+<!--    <gradient-->
+<!--        android:angle="90"-->
+<!--        android:endColor="#ff00ff"-->
+<!--        android:startColor="#00000000" />-->
 </shape>

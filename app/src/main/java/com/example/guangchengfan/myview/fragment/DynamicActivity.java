@@ -1,8 +1,9 @@
 package com.example.guangchengfan.myview.fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guangchengfan.myview.R;
 
@@ -16,10 +17,10 @@ public class DynamicActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         if (display.getWidth() > display.getHeight()) {
             Fragment1 fragment1 = new Fragment1();
-            getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment1).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment1).commit();
         } else {
             Fragment2 fragment2 = new Fragment2();
-            getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment2).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment2).commit();
         }
     }
 }

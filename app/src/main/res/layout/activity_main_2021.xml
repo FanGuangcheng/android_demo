@@ -56,5 +56,12 @@
             android:id="@+id/btn_coor_behavior"
             android:layout_marginBottom="10dp"/>
 
+        <Button
+            android:text="SlidingTablayout view 测试"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_sliding_tab_layout"
+            android:layout_marginBottom="10dp"/>
+
     </LinearLayout>
 </ScrollView>

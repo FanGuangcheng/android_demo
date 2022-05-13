@@ -36,4 +36,5 @@ dependencies {
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
     implementation 'com.google.android.material:material:1.4.0'
+    implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
 }
