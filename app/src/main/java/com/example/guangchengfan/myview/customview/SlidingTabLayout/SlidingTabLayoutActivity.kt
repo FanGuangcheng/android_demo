@@ -17,7 +17,7 @@ class SlidingTabLayoutActivity: AppCompatActivity() {
     private var mTab: SlidingTabLayout? = null
     private var mVp: ViewPager? = null
     private var mFragments: ArrayList<Fragment>? = null
-    private val mTitlesArrays = arrayOf("新闻", "娱乐", "头条", "八卦")
+    private val mTitlesArrays = arrayOf("新闻", "娱乐", "头条", "八卦", "哈哈", "嗷嗷啊", "ajdajdiajdij")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +33,9 @@ class SlidingTabLayoutActivity: AppCompatActivity() {
         mFragments!!.add(Fragment2())
         mFragments!!.add(Fragment1())
         mFragments!!.add(Fragment2())
+        mFragments!!.add(Fragment1())
+        mFragments!!.add(Fragment2())
+        mFragments!!.add(Fragment1())
         val pagerAdapter = MyPagerAdapter(supportFragmentManager, mFragments)
         mVp!!.adapter = pagerAdapter
         mTab!!.setViewPager(mVp, mTitlesArrays) //tab和ViewPager进行关联
