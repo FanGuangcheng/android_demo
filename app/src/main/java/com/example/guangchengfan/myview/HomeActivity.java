@@ -10,15 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btn_old_main_activity;
-    Button btn_2021_main_activity;
+    Button btn_new_main_activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        btn_2021_main_activity = findViewById(R.id.btn_2021_main_activity);
-        btn_2021_main_activity.setOnClickListener(this);
+        btn_new_main_activity = findViewById(R.id.btn_new_main_activity);
+        btn_new_main_activity.setOnClickListener(this);
 
         btn_old_main_activity = findViewById(R.id.btn_old_main_activity);
         btn_old_main_activity.setOnClickListener(this);
@@ -27,8 +27,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_2021_main_activity:
-                startTargetActivity(MainActivity2021.class);
+            case R.id.btn_new_main_activity:
+                startTargetActivity(NewMainActivity.class);
                 break;
             case R.id.btn_old_main_activity:
                 startTargetActivity(OldMainActivity.class);

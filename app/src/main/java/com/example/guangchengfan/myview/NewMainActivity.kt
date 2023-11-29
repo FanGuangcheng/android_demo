@@ -16,7 +16,7 @@ import com.example.guangchengfan.myview.view.TouchDelegateActivity
  * @author :fgc
  * @date :8/30/21
  */
-class MainActivity2021: Activity() {
+class NewMainActivity: Activity() {
     lateinit var btn_small_icon: Button
     lateinit var btn_restore_activity: Button
     lateinit var btn_constraint_layout: Button
@@ -27,7 +27,7 @@ class MainActivity2021: Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_2021)
+        setContentView(R.layout.activity_main_new)
 
         btn_small_icon = findViewById(R.id.btn_small_icon)
         btn_small_icon.setOnClickListener {

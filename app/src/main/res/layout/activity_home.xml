@@ -23,10 +23,10 @@ android:layout_height="fill_parent" >
 
 
     <Button
-        android:text="2021 demo列表"
+        android:text="new demo列表"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_2021_main_activity"
+        android:id="@+id/btn_new_main_activity"
         android:layout_marginBottom="10dp"/>
 
 </LinearLayout>
