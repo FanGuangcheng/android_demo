@@ -63,5 +63,12 @@
             android:id="@+id/btn_sliding_tab_layout"
             android:layout_marginBottom="10dp"/>
 
+
+        <Button
+            android:text="ViewPager2 轮播测试"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_viewpager2_loop"
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 </ScrollView>

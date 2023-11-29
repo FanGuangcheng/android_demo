@@ -11,6 +11,8 @@ import com.example.guangchengfan.myview.customview.SlidingTabLayout.SlidingTabLa
 import com.example.guangchengfan.myview.qrcode.QrCodeActivity
 import com.example.guangchengfan.myview.recycleview.BRVAH.BRVAHRecycleViewActivity
 import com.example.guangchengfan.myview.view.TouchDelegateActivity
+import com.example.guangchengfan.myview.viewpager.ViewPager2LoopActivity
+import com.example.guangchengfan.myview.viewpager.ViewPagerActivity
 
 /**
  * @author :fgc
@@ -24,6 +26,7 @@ class NewMainActivity: Activity() {
     lateinit var btn_brvah_recycle_view: Button
     lateinit var btn_coor_behavior: Button
     lateinit var btn_sliding_tab_layout: Button
+    lateinit var btn_viewpager2_loop: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,12 @@ class NewMainActivity: Activity() {
         btn_sliding_tab_layout.setOnClickListener {
             startTargetActivity(SlidingTabLayoutActivity::class.java)
         }
+        btn_viewpager2_loop = findViewById(R.id.btn_viewpager2_loop)
+        btn_viewpager2_loop.setOnClickListener {
+            startTargetActivity(ViewPager2LoopActivity::class.java)
+        }
+
+
 
     }
 
