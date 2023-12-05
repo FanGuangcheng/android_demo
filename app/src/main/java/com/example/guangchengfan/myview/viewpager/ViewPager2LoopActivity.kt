@@ -68,6 +68,9 @@ class ViewPager2LoopActivity : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     enableLoop(false)
                 }
+                MotionEvent.ACTION_MOVE -> {
+                    enableLoop(false)
+                }
                 MotionEvent.ACTION_UP -> {
                     enableLoop(true)
                 }

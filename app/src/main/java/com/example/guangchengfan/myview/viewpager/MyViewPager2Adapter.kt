@@ -3,6 +3,7 @@ package com.example.guangchengfan.myview.viewpager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guangchengfan.myview.R
 import com.google.android.material.imageview.ShapeableImageView
@@ -21,6 +22,9 @@ class MyViewPager2Adapter : RecyclerView.Adapter<MyViewPager2Adapter.MyViewPager
 
     override fun onBindViewHolder(holder: MyViewPager2Holder, position: Int) {
         holder.ivItemImg.setImageDrawable(holder.ivItemImg.resources.getDrawable(dataList.get(position)))
+        holder.ivItemImg.setOnClickListener {
+            Toast.makeText(holder.ivItemImg.context, "index:" + position, Toast.LENGTH_LONG).show()
+        }
     }
 
     class MyViewPager2Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
