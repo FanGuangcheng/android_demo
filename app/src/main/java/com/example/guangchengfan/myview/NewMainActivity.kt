@@ -8,11 +8,14 @@ import com.example.guangchengfan.myview.activity.RestoreActivity
 import com.example.guangchengfan.myview.constraintlayout.ConstraintLayoutActivity
 import com.example.guangchengfan.myview.coordinatorlayout.CoorDinatorBehaviorActivity
 import com.example.guangchengfan.myview.customview.SlidingTabLayout.SlidingTabLayoutActivity
+import com.example.guangchengfan.myview.imageload.LoadBigImgActivity
 import com.example.guangchengfan.myview.qrcode.QrCodeActivity
 import com.example.guangchengfan.myview.recycleview.BRVAH.BRVAHRecycleViewActivity
 import com.example.guangchengfan.myview.view.TouchDelegateActivity
+import com.example.guangchengfan.myview.viewpager.ViewPager2DemoActivity
 import com.example.guangchengfan.myview.viewpager.ViewPager2LoopActivity
 import com.example.guangchengfan.myview.viewpager.ViewPagerActivity
+import com.example.guangchengfan.myview.webview.LoadWebviewActivity
 
 /**
  * @author :fgc
@@ -27,6 +30,9 @@ class NewMainActivity: Activity() {
     lateinit var btn_coor_behavior: Button
     lateinit var btn_sliding_tab_layout: Button
     lateinit var btn_viewpager2_loop: Button
+    lateinit var btn_img_load_big: Button
+    lateinit var btn_webview_load: Button
+    lateinit var btn_viewpager2_demo: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +73,20 @@ class NewMainActivity: Activity() {
         btn_viewpager2_loop.setOnClickListener {
             startTargetActivity(ViewPager2LoopActivity::class.java)
         }
+        btn_img_load_big = findViewById(R.id.btn_img_load_big)
+        btn_img_load_big.setOnClickListener {
+            startTargetActivity(LoadBigImgActivity::class.java)
+        }
 
+        btn_webview_load = findViewById(R.id.btn_webview_load)
+        btn_webview_load.setOnClickListener {
+            startTargetActivity(LoadWebviewActivity::class.java)
+        }
+
+        btn_viewpager2_demo = findViewById(R.id.btn_viewpager2_demo)
+        btn_viewpager2_demo.setOnClickListener {
+            startTargetActivity(ViewPager2DemoActivity::class.java)
+        }
 
 
     }

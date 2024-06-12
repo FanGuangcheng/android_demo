@@ -70,5 +70,29 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_viewpager2_loop"
             android:layout_marginBottom="10dp"/>
+
+
+        <Button
+            android:text="ImageView 加载超大图"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_img_load_big"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:text="webview加载"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_webview_load"
+            android:layout_marginBottom="10dp"/>
+
+
+        <Button
+            android:text="viewpager2 Demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_viewpager2_demo"
+            android:layout_marginBottom="10dp"/>
+
     </LinearLayout>
 </ScrollView>
