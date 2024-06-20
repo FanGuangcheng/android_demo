@@ -23,7 +23,7 @@ public class ZmgCustomWebView extends WebView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
+        if(event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE){
             super.requestDisallowInterceptTouchEvent(true);
         }else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() ==MotionEvent.ACTION_CANCEL){
             super.requestDisallowInterceptTouchEvent(false);
