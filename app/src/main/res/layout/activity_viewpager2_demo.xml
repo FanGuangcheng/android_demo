@@ -23,6 +23,7 @@
         app:tabInlineLabel="false"/>
     <!-- 调低tab的最小宽度，使得子view充满tab，然后调整子view的左右间距 padding即可    -->
     <!--app:tabMinWidth="10dp"    -->
+<!--   设置tabMinWidth的同时，还要设置 tabPaddingStart tabPaddingEnd  为0才可以  -->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
