@@ -42,6 +42,12 @@
 	浅谈ClickableSpan ， 实现TextView文本某一部分文字的点击响应（超链接）
 	LinkMovementMethod.getInstance()
 	https://www.cnblogs.com/xqxacm/p/5127877.html
+  	
+	文混排文字图片垂直居中 
+      多行文档：https://blog.csdn.net/qq_20613731/article/details/107502304
+       https://blog.csdn.net/u012230055/article/details/98622666
+       https://blog.csdn.net/u012230055/article/details/98633461
+       https://blog.csdn.net/u010983881/article/details/53995020
 
 * 7、Lottie动画使用
 	https://juejin.cn/post/6844903661760413704
