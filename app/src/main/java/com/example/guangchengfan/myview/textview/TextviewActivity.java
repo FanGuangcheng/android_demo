@@ -14,6 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guangchengfan.myview.R;
 
+
+/**
+ * 图文混排文字图片垂直居中 多行文档：https://blog.csdn.net/qq_20613731/article/details/107502304
+ *
+ * https://blog.csdn.net/u012230055/article/details/98622666
+ * https://blog.csdn.net/u012230055/article/details/98633461
+ * https://blog.csdn.net/u010983881/article/details/53995020
+ */
 public class TextviewActivity extends AppCompatActivity {
     private static final int TV_TIPS_WIDHT = 220;
     private static final int TV_TIPS_RECOM_WIDTH = 200;
