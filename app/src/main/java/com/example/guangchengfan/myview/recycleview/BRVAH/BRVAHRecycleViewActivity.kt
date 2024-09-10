@@ -16,7 +16,6 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnItemLongClickListener
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.guangchengfan.myview.R
-import kotlinx.android.synthetic.main.recycle_filter.*
 import java.util.*
 import kotlin.collections.ArrayList
 import androidx.recyclerview.widget.ItemTouchHelper.Callback as Callback

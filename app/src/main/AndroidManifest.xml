@@ -22,7 +22,8 @@
         <activity android:name=".view.TouchDelegateActivity" />
         <activity android:name=".OldMainActivity" />
         <activity android:name=".NewMainActivity" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -36,12 +36,13 @@
     <!-- 设置行间距 -->
     <TextView
         android:id="@+id/tv_line_space_test"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:maxWidth="220dp"
+        android:textSize="14.5sp"
         android:ellipsize="end"
-        android:lineSpacingExtra="10dp"
+        android:background="#ff00ff"
         android:text="这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!这是行间距为负数的情况!"
         android:layout_marginBottom="5dp"/>
 </LinearLayout>

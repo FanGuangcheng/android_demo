@@ -62,7 +62,7 @@ class QrCodeActivity : AppCompatActivity() {
     }
 
     @Throws(FileNotFoundException::class, IOException::class)
-    fun getBitmap(cr: ContentResolver, url: Uri?): Bitmap {
+    fun getBitmap(cr: ContentResolver, url: Uri): Bitmap? {
 
         val input = cr.openInputStream(url)
         val options = BitmapFactory.Options()
@@ -71,7 +71,7 @@ class QrCodeActivity : AppCompatActivity() {
         val rect = Rect()
         val bitmap = BitmapFactory.decodeStream(input, null, options)
 //        val bitmap = BitmapFactory.decodeStream(input)
-        input.close()
+        input?.close()
         return bitmap
     }
 

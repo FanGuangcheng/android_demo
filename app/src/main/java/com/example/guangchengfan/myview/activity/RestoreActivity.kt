@@ -36,7 +36,7 @@ class RestoreActivity : AppCompatActivity() {
         outState?.putString(TIME_STAMP, timeStamp)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         timeStamp = savedInstanceState?.getString(TIME_STAMP)
         Log.d(TAG,"onRestoreInstanceState: " + timeStamp)
