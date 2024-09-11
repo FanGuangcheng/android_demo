@@ -11,6 +11,7 @@ import com.example.guangchengfan.myview.customview.SlidingTabLayout.SlidingTabLa
 import com.example.guangchengfan.myview.imageload.LoadBigImgActivity
 import com.example.guangchengfan.myview.qrcode.QrCodeActivity
 import com.example.guangchengfan.myview.recycleview.BRVAH.BRVAHRecycleViewActivity
+import com.example.guangchengfan.myview.recycleview.SwapRecyclerViewAct
 import com.example.guangchengfan.myview.view.TouchDelegateActivity
 import com.example.guangchengfan.myview.viewpager.ViewPager2DemoActivity
 import com.example.guangchengfan.myview.viewpager.ViewPager2LoopActivity
@@ -33,6 +34,7 @@ class NewMainActivity: Activity() {
     lateinit var btn_img_load_big: Button
     lateinit var btn_webview_load: Button
     lateinit var btn_viewpager2_demo: Button
+    lateinit var btn_swap_act: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +89,13 @@ class NewMainActivity: Activity() {
         btn_viewpager2_demo.setOnClickListener {
             startTargetActivity(ViewPager2DemoActivity::class.java)
         }
+
+        btn_swap_act = findViewById(R.id.btn_swap_act)
+        btn_swap_act.setOnClickListener {
+            startTargetActivity(SwapRecyclerViewAct::class.java)
+        }
+
+
 
 
     }

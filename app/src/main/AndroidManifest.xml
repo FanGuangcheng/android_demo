@@ -57,6 +57,8 @@
         <activity android:name=".imageload.LoadBigImgActivity"/>
         <activity android:name=".webview.LoadWebviewActivity"/>
         <activity android:name=".viewpager.ViewPager2DemoActivity"/>
+        <activity android:name=".recycleview.SwapRecyclerViewAct"/>
+
     </application>
 
 </manifest>

@@ -94,5 +94,12 @@
             android:id="@+id/btn_viewpager2_demo"
             android:layout_marginBottom="10dp"/>
 
+        <Button
+            android:text="recyclerView 长按排序"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_swap_act"
+            android:layout_marginBottom="10dp"/>
+
     </LinearLayout>
 </ScrollView>
