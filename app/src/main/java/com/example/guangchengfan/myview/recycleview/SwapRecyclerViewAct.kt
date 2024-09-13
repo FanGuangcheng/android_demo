@@ -17,7 +17,8 @@ class SwapRecyclerViewAct : AppCompatActivity() {
         setContentView(R.layout.activity_swap_act)
 
         recyclerView = findViewById(R.id.recyclerView)
-        val itemList = mutableListOf("Item 1", "Item 2", "Item 3", "Item 4")
+        val itemList = mutableListOf("Item 1", "Item 2")
+//        val itemList = mutableListOf("Item 1", "Item 2", "Item 3", "Item 3", "Item 3", "Item 3", "Item 3", "Item 3", "Item 3", "Item 3", "Item 3")
 
         adapter = MyAdapter(itemList)
         recyclerView.adapter = adapter

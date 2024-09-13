@@ -7,7 +7,8 @@ class ItemMoveCallback(private val adapter: ItemTouchHelperAdapter) : ItemTouchH
 
     // 支持的动作：上下拖拽
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+//        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        val dragFlags = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         return makeMovementFlags(dragFlags, 0)
     }
 
