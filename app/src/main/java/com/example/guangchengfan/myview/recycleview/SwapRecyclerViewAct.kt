@@ -17,17 +17,14 @@ class SwapRecyclerViewAct : AppCompatActivity() {
         setContentView(R.layout.activity_swap_act)
 
         recyclerView = findViewById(R.id.recyclerView)
+        val itemList = mutableListOf("Item 1", "Item 2", "Item 3", "Item 4")
 
-        // 初始化数据
-        val items = mutableListOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
-
-        // 设置适配器
-        adapter = MyAdapter(items)
+        adapter = MyAdapter(itemList)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        // 创建并附加 ItemTouchHelper
-        val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        val callback = ItemMoveCallback(adapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(recyclerView)
     }
 }

@@ -1,16 +1,27 @@
 package com.example.guangchengfan.myview.recycleview
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guangchengfan.myview.R
+import java.util.Collections
 
-class MyAdapter(private val items: MutableList<String>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val itemList: MutableList<String>) :
+    RecyclerView.Adapter<MyAdapter.MyViewHolder>(), ItemTouchHelperAdapter {
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder {
         val textView: TextView = itemView.findViewById(R.id.textView)
+
+        override fun onItemSelected() {
+            itemView.setBackgroundColor(Color.RED) // 改变选中时的背景颜色
+        }
+
+        override fun onItemClear() {
+            itemView.setBackgroundColor(Color.GREEN) // 重置背景颜色
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -19,16 +30,20 @@ class MyAdapter(private val items: MutableList<String>) : RecyclerView.Adapter<M
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.textView.text = items[position]
+        holder.textView.text = itemList[position]
+        holder.itemView.setOnClickListener {
+            holder.itemView.setBackgroundColor(Color.GREEN) // 重置背景颜色
+        }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int {
+        return itemList.size
+    }
 
-    // 交换数据的位置
-    fun swapItems(fromPosition: Int, toPosition: Int) {
-        val fromItem = items[fromPosition]
-        items.removeAt(fromPosition)
-        items.add(toPosition, fromItem)
+    // 实现拖动时的数据交换
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        Collections.swap(itemList, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
+        return true
     }
 }
