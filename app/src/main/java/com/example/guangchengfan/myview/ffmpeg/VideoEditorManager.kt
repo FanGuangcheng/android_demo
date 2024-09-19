@@ -114,7 +114,7 @@ object VideoEditorManager: ExecuteCallback {
 
 //        val command = arrayOf("-i", "$input1", "-c:v", "libx264", "-s $screenWidth$screenHeight","-c:a", "aac", "$output1")
 //        val command2 = "-i $input2 -vf \"scale=$screenWidth:$screenHeight\" -c:v libx264 -preset fast -crf 23 -c:a copy $output2"
-        val command2 = "-i $input2 -vf \"scale=$screenWidth:-1, pad=$screenWidth:$screenHeight:(ow-iw)/2:0:red\" -c:a copy $output2"
+        val command2 = "-i $input2 -vf \"scale=$screenWidth:-1, pad=$screenWidth:$screenHeight:(ow-iw)/2:(oh-ih)/2:red\" -c:a copy $output2"
 
         val scale2 = FFmpeg.execute(command2)
         Log.d("edit_video_log","VideoEditorManager scaleVideo ####### scale2: $scale2, command2: $command2")
