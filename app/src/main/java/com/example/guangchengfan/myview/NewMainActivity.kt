@@ -8,6 +8,7 @@ import com.example.guangchengfan.myview.activity.RestoreActivity
 import com.example.guangchengfan.myview.constraintlayout.ConstraintLayoutActivity
 import com.example.guangchengfan.myview.coordinatorlayout.CoorDinatorBehaviorActivity
 import com.example.guangchengfan.myview.customview.SlidingTabLayout.SlidingTabLayoutActivity
+import com.example.guangchengfan.myview.ffmpeg.VideoFfmpegAct
 import com.example.guangchengfan.myview.imageload.LoadBigImgActivity
 import com.example.guangchengfan.myview.qrcode.QrCodeActivity
 import com.example.guangchengfan.myview.recycleview.BRVAH.BRVAHRecycleViewActivity
@@ -15,7 +16,6 @@ import com.example.guangchengfan.myview.recycleview.SwapRecyclerViewAct
 import com.example.guangchengfan.myview.view.TouchDelegateActivity
 import com.example.guangchengfan.myview.viewpager.ViewPager2DemoActivity
 import com.example.guangchengfan.myview.viewpager.ViewPager2LoopActivity
-import com.example.guangchengfan.myview.viewpager.ViewPagerActivity
 import com.example.guangchengfan.myview.webview.LoadWebviewActivity
 
 /**
@@ -35,6 +35,7 @@ class NewMainActivity: Activity() {
     lateinit var btn_webview_load: Button
     lateinit var btn_viewpager2_demo: Button
     lateinit var btn_swap_act: Button
+    lateinit var btn_ffmpeg_test: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,8 +96,10 @@ class NewMainActivity: Activity() {
             startTargetActivity(SwapRecyclerViewAct::class.java)
         }
 
-
-
+        btn_ffmpeg_test = findViewById(R.id.btn_ffmpeg_test)
+        btn_ffmpeg_test.setOnClickListener {
+            startTargetActivity(VideoFfmpegAct::class.java)
+        }
 
     }
 

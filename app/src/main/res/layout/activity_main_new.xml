@@ -101,5 +101,13 @@
             android:id="@+id/btn_swap_act"
             android:layout_marginBottom="10dp"/>
 
+
+        <Button
+            android:text="ffmpeg 功能测试"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_ffmpeg_test"
+            android:layout_marginBottom="10dp"/>
+
     </LinearLayout>
 </ScrollView>

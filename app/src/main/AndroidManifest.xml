@@ -11,6 +11,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:name="com.example.guangchengfan.myview.MyApplication"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -59,6 +60,7 @@
         <activity android:name=".viewpager.ViewPager2DemoActivity"/>
         <activity android:name=".recycleview.SwapRecyclerViewAct"/>
 
+        <activity android:name=".ffmpeg.VideoFfmpegAct"/>
     </application>
 
 </manifest>

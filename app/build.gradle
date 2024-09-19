@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.example.guangchengfan.myview"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -42,4 +42,12 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
+
+//    implementation 'com.arthenica:mobile-ffmpeg-full:4.4'
+
+    implementation 'com.arthenica:mobile-ffmpeg-https-gpl:4.4.LTS'
+//    implementation 'com.arthenica:mobile-ffmpeg-https:4.4.LTS'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3' // 最新稳定版本
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3' // 用于 Android 的协程支持
+
 }
