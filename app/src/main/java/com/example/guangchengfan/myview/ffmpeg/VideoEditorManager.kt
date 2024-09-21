@@ -4,18 +4,18 @@ import android.util.Log
 import com.arthenica.mobileffmpeg.ExecuteCallback
 import com.arthenica.mobileffmpeg.FFmpeg
 import com.example.guangchengfan.myview.MyApplication
-import com.example.guangchengfan.myview.ffmpeg.VideoClip
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.me.kevin.video.edit.VideoClip
 import java.io.File
 
 object VideoEditorManager: ExecuteCallback {
-    private const val CLIP_VIDEO_DIR: String = "zsj_clip_video_folder"
-    // 视频裁剪占总操作的比重，即全部完成视频裁剪，占总进度的40%
-    private const val CLIP_WEIGHT = 0.4f
+    override fun apply(executionId: Long, returnCode: Int) {
+        Log.d("edit_video_log","VideoEditorManager apply callback, $executionId, $returnCode, ")
 
-    private val clipVideoMap = HashMap<Long, String>()
-    private val clipedVideoMap = HashMap<Long, String>()
+    }
 
     fun concatTest(command: String) {
         Log.d("edit_video_log","VideoEditorManager concatTest")
@@ -55,13 +55,13 @@ object VideoEditorManager: ExecuteCallback {
     }
 
     fun printVideoInfo() {
-        val input1 = "-i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/1scale_1722995979106.mp4"
+        val input1 = "-i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/clip_1722995979106.mp4 /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/info1.txt"
         Log.d("edit_video_log","VideoEditorManager printVideoInfo inputInfo1: ***********")
 
         val inputInfo1 = FFmpeg.execute(input1)
         Log.d("edit_video_log","VideoEditorManager printVideoInfo inputInfo1: $inputInfo1")
 
-        val input2 = "-i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/1scale_1723032638188.mp4"
+        val input2 = "-i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/clip_1723032638188.mp4 /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/info2.txt"
         val inputInfo2 = FFmpeg.execute(input2)
         Log.d("edit_video_log","VideoEditorManager printVideoInfo inputInfo2: $inputInfo2")
 
@@ -146,8 +146,7 @@ object VideoEditorManager: ExecuteCallback {
 
     }
 
-    fun clipAndMergeVideo(videoClipList: List<VideoClip>) {
-                clipVideoMap.clear()
+    fun clipVideo(videoClipList: List<VideoClip>) {
         for (videoClip in videoClipList) {
             Log.d("edit_video_log","VideoEditorManager videoClip detail: $videoClip")
 
@@ -164,62 +163,13 @@ object VideoEditorManager: ExecuteCallback {
 //            cmd.append(" -vf scale=$screenWidth:-1 ") // 导出视频的时候设置分辨率一致
             cmd.append(" -c ")
             cmd.append("copy ")
-            var outputPath = getVideoClipSaveParent() + "1clip_" +videoClip.videoFileName
+            var outputPath = getVideoSaveParent() + "1clip_" +videoClip.videoFileName
             cmd.append(outputPath)
             val executeId = FFmpeg.executeAsync(cmd.toString(), this@VideoEditorManager)
-            clipVideoMap[executeId] = outputPath
             Log.d("edit_video_log","VideoEditorManager clip executeId:$executeId,  command: $cmd")
 
         }
     }
-
-    override fun apply(executionId: Long, returnCode: Int) {
-        Log.d("edit_video_log","VideoEditorManager apply callback, $executionId, $returnCode, ")
-        if (clipVideoMap.containsKey(executionId) && returnCode == 0) {
-            val outputFile = File(clipVideoMap[executionId])
-            if (!outputFile.exists()) {
-                Log.d("edit_video_log","VideoEditorManager apply callback file not exist, $executionId, $returnCode, ")
-                return
-            }
-
-            clipedVideoMap[executionId] = clipVideoMap[executionId]!!
-
-            val progress = (clipedVideoMap.size * 100 / clipVideoMap.size * CLIP_WEIGHT).toInt()
-//            RxBus.getDefault().post(EditVideoEvent(progress, false)) // 除了post通知外，也需要本地保存，以方便publishActivity自取
-            Log.d("edit_video_log","VideoEditorManager apply progress: $progress, false")
-
-            if (clipVideoMap.size == clipedVideoMap.size) {
-
-//                ffmpeg -i "concat:input1.mp4|input2.mp4|input3.mp4" -c copy output.mp4
-
-                val cmd = StringBuffer()
-                cmd.append("-i ")
-                cmd.append("\"concat:")
-                for (clipedVideoPath in clipedVideoMap.values) {
-                    cmd.append(clipedVideoPath)
-                    cmd.append("|")
-                }
-                cmd.append("\" -c ")
-                cmd.append("copy ")
-                cmd.append(getVideoClipSaveParent() + "concat_video.mp4")
-                Log.d("edit_video_log","VideoEditorManager all video has cliped, start concat video command:$cmd")
-                concatVideoId = FFmpeg.executeAsync(cmd.toString(), this@VideoEditorManager)
-            }
-        } else if (concatVideoId == executionId) {
-            if (returnCode != 0) {
-                Log.d("edit_video_log","VideoEditorManager clip and concat video failed~!")
-
-            } else {
-//                RxBus.getDefault().post(EditVideoEvent(100, true))
-                Log.d("edit_video_log","VideoEditorManager apply progress: 100, true")
-
-                Log.d("edit_video_log","VideoEditorManager clip and concat video success")
-//                ToastHelper.show("clip and concat success~~~~")
-            }
-        }
-    }
-
-    private var concatVideoId: Long = -1
 
     private fun formatDuration(duration: Long): String {
         val hours = duration / (1000 * 60 * 60)
@@ -230,7 +180,7 @@ object VideoEditorManager: ExecuteCallback {
         return String.format("%02d:%02d:%02d.%03d", hours, minutes, seconds, milliseconds)
     }
 
-    private fun getVideoClipSaveParent(): String{
+    private fun getVideoSaveParent(): String{
         var rootDir = MyApplication.instance.externalCacheDir?.absolutePath ?: ""
         if (rootDir.isEmpty()) {
             rootDir = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache"
@@ -242,6 +192,227 @@ object VideoEditorManager: ExecuteCallback {
         }
 
         return parentFile.absolutePath + File.separator
+    }
+
+
+    /**---------------------editvideo-------------------------**/
+    private const val CLIP_VIDEO_DIR: String = "zsj_clip_video_folder"
+    // 视频裁剪占总操作的比重，即全部完成视频裁剪，占总进度的10%
+    private const val CLIP_PROGRESS_WEIGHT = 0.1f
+    // 视频分辨率转换占的总比在，即完成所有视频分辨率转换，占总进度的70%
+    private const val SCALE_PROGRESS_WEIGHT = 0.7f
+    // 视频拼接转换占的总比在，即完成所有视频拼接转换，占总进度的20%
+    private const val CONCAT_PROGRESS_WEIGHT = 0.2f
+    // todo fgc 进度暂定500ms更新加一，避免卡住不动的现象
+    private const val PROGRESS_UPDATE_INTERVAL: Long = 500
+
+    private var currentEditState: EditState = EditState.INIT
+
+    private val clippedVideoList = ArrayList<VideoClip>()
+    private val scaledVideoList = ArrayList<VideoClip>()
+    private var mCurrentProgress: Float = 0f
+    private var progressJob: Job? = null
+    private var mTotalEditVideoSize: Int = 1
+
+
+    fun editVideos(videoClipList: List<VideoClip>) {
+        if (videoClipList.isEmpty()) {
+            Log.d("edit_video_log","VideoEditorManager editVideos: list is empty,just return")
+            return
+        }
+
+        mTotalEditVideoSize = videoClipList.size
+        currentEditState = EditState.INIT
+        GlobalScope.launch {
+            clippedVideoList.clear()
+            scaledVideoList.clear()
+            clipVideos(videoClipList)
+        }
+    }
+
+    private fun clipVideos(videoClipList: List<VideoClip>) {
+        Log.d("edit_video_log","VideoEditorManager clipVideos: start")
+        currentEditState = EditState.CLIPPING
+        for (videoClip in videoClipList) {
+//            ffmpeg -i input.mp4 -ss 00:00:10.000 -to 00:00:20.000 -c copy output.mp4
+            val cmd = StringBuffer()
+            cmd.append("-i ")
+            cmd.append(videoClip.originalFilePath)
+            cmd.append(" -ss ")
+            cmd.append(formatDuration(videoClip.startAtMs))
+            cmd.append(" -to ")
+            cmd.append(formatDuration(videoClip.endAtMs))
+            cmd.append(" -c ")
+            cmd.append("copy ")
+            val outputFileName = "clip_" +videoClip.videoFileName
+            val outputPath = getVideoSaveParent() + outputFileName
+            cmd.append(outputPath)
+            // 开始执行，慢慢的增加进度
+            startProgressUpdate()
+
+            val executeResult = FFmpeg.execute(cmd.toString())
+            if (executeResult == 0) {
+                val clippedVideoClip = VideoClip(
+                    videoClip.id,
+                    outputPath,
+                    outputFileName,
+                    videoClip.originalDurationMs,
+                    videoClip.startAtMs,
+                    videoClip.endAtMs,
+                    videoClip.isSelected,
+                    videoClip.width,
+                    videoClip.height
+                )
+                clippedVideoList.add(clippedVideoClip)
+                // 操作完成，更新当前进度
+                updateProgressUpdate(clippedVideoList.size * 100 / mTotalEditVideoSize * CLIP_PROGRESS_WEIGHT)
+            } else {
+                onEditVideosFailed("clipVideos clip video failed id:${videoClip.id}")
+                break
+            }
+
+            Log.d("edit_video_log","VideoEditorManager clipVideos $videoClip")
+        }
+
+        if (clippedVideoList.size == mTotalEditVideoSize) {
+            scaleVideos(clippedVideoList)
+        }
+    }
+
+    private fun scaleVideos(clippedVideos: List<VideoClip>) {
+        currentEditState = EditState.SCALING
+        var screenWidth = MyApplication.instance.getScreenWidth()
+        if (screenWidth % 2 != 0) {
+            screenWidth += 1
+        }
+        var screenHeight = MyApplication.instance.getScreenHeight()
+        if (screenHeight % 2 != 0) {
+            screenHeight += 1
+        }
+
+        for (videoClip in clippedVideos) {
+            val inputFile: File = File(videoClip.originalFilePath)
+            val outputFileName = "scale_" + inputFile.name
+            var outputScalePath = getVideoSaveParent() + outputFileName
+            // 开始执行，慢慢的增加进度
+            startProgressUpdate()
+            val  videoAspectRatio = videoClip.width.toFloat() / videoClip.height.toFloat()
+            val screenAspectRatio = screenWidth.toFloat() / screenHeight.toFloat()
+            val screenHwRatio = screenHeight.toFloat() / screenWidth.toFloat()
+
+
+            // todo fgc 暂时用不同颜色进行 填充，晚点都改为黑色
+            var scaleCommand = if (videoAspectRatio >= screenAspectRatio) {
+                // 横屏 宽视频
+                "-i ${inputFile.absolutePath} -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
+            } else {
+                // 竖屏 窄视频
+                "-i ${inputFile.absolutePath} -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red $outputScalePath"
+            }
+
+            val executeResult = FFmpeg.execute(scaleCommand)
+            Log.d("edit_video_log","scale command: $scaleCommand")
+
+            if (executeResult == 0) {
+                val scaledVideoClip = VideoClip(
+                    videoClip.id,
+                    outputScalePath,
+                    outputFileName,
+                    videoClip.originalDurationMs,
+                    videoClip.startAtMs,
+                    videoClip.endAtMs,
+                    videoClip.isSelected,
+                    videoClip.width,
+                    videoClip.height
+                )
+                scaledVideoList.add(scaledVideoClip)
+                // 操作完成，更新当前进度
+                updateProgressUpdate(scaledVideoList.size * 100 / mTotalEditVideoSize * SCALE_PROGRESS_WEIGHT)
+            } else {
+                onEditVideosFailed("scale video failed path:${inputFile.name}")
+                break
+            }
+
+            Log.d("edit_video_log","VideoEditorManager scaleVideos $outputScalePath")
+        }
+    }
+
+    private fun getMaxProgress(): Float {
+        if (currentEditState == EditState.CLIPPING) {
+            return getClipMaxProgress()
+        } else if (currentEditState == EditState.SCALING) {
+            return getClipMaxProgress() + getScaleMaxProgress()
+        }
+        return 100.0f
+    }
+
+    private fun getScaleMaxProgress(): Float {
+        var currentSize = scaledVideoList.size + 1
+        if (currentSize > mTotalEditVideoSize) {
+            currentSize = mTotalEditVideoSize
+        }
+        return currentSize * 100 / mTotalEditVideoSize * SCALE_PROGRESS_WEIGHT
+    }
+
+    private fun getClipMaxProgress(): Float {
+        var currentSize = clippedVideoList.size + 1
+        if (currentSize > mTotalEditVideoSize) {
+            currentSize = mTotalEditVideoSize
+        }
+        return currentSize * 100 / mTotalEditVideoSize * CLIP_PROGRESS_WEIGHT
+    }
+
+    /**
+     * currentProgress 当前阶段的进度，因此updateProgressUpdate 里面需要根据当前阶段计算总进度
+     */
+    private fun updateProgressUpdate(currentProgress: Float) {
+        var baseProgress = 0f
+        when (currentEditState) {
+            EditState.CLIPPING -> {
+                baseProgress = 0f
+            }
+            EditState.SCALING -> {
+                baseProgress = CLIP_PROGRESS_WEIGHT * 100
+            }
+            EditState.CONCATING -> {
+                baseProgress = CLIP_PROGRESS_WEIGHT * 100 + SCALE_PROGRESS_WEIGHT * 100
+            }
+            else -> {
+                baseProgress = 0f
+            }
+        }
+        mCurrentProgress = baseProgress + currentProgress
+        Log.d("edit_video_log","VideoEditorManager updateProgressUpdate: $mCurrentProgress")
+        startProgressUpdate()
+    }
+    private fun startProgressUpdate() {
+        progressJob?.cancel()
+        progressJob = GlobalScope.launch {
+            while (true) {
+                delay(PROGRESS_UPDATE_INTERVAL)
+                if (mCurrentProgress < getMaxProgress()) {
+                    mCurrentProgress += 1
+                } else {
+                    break
+                }
+                // 持续更新progress，避免一直卡住的现象
+                Log.d("edit_video_log","VideoEditorManager startProgressUpdate: $mCurrentProgress")
+            }
+        }
+    }
+
+    private fun onEditVideosFailed(msg: String = "-") {
+        // todo fgc 停止编辑视频，通知任务失败相关的逻辑，并且删除相关过程中间产物
+        Log.d("edit_video_log","VideoEditorManager apply callback, editvideos failed, $msg")
+
+    }
+
+    enum class EditState {
+        INIT,
+        CLIPPING,
+        SCALING,
+        CONCATING,
+        FINISHED
     }
 
 }

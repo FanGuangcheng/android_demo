@@ -7,6 +7,7 @@ import com.example.guangchengfan.myview.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.me.kevin.utils.videoedit.VideoEditorManager
+import org.me.kevin.video.edit.VideoClip
 
 class VideoFfmpegAct : AppCompatActivity() {
 
@@ -23,7 +24,7 @@ class VideoFfmpegAct : AppCompatActivity() {
                 videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1722995979106.mp4", "1722995979106.mp4", 11000, 5000, 9000, false))
                 videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1723032638188.mp4", "1723032638188.mp4", 13000, 8000, 12000, false))
 
-                VideoEditorManager.clipAndMergeVideo(videoList)
+                VideoEditorManager.clipVideo(videoList)
             }
 
         }
@@ -49,6 +50,20 @@ class VideoFfmpegAct : AppCompatActivity() {
             }
         }
 
+        findViewById<Button>(R.id.btn_edit_videos).setOnClickListener {
+
+            GlobalScope.launch {
+                val videoList = ArrayList<VideoClip>()
+                // 红米测试机
+                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1722995979106.mp4", "1722995979106.mp4", 11000, 5000, 9000, false, 1080, 2400))
+                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1723032638188.mp4", "1723032638188.mp4", 13000, 8000, 12000, false, 1920, 1080))
+
+                // 华为p30pro测试机
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/153611.mp4", "153611.mp4", 6000, 1000, 4000, false))
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/153666.mp4", "153666.mp4", 10000, 3000, 8000, false))
+                VideoEditorManager.editVideos(videoList)
+            }
+        }
 
     }
 }
