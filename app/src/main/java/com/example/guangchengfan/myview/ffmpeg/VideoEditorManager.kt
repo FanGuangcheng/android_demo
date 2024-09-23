@@ -186,7 +186,21 @@ object VideoEditorManager: ExecuteCallback {
             rootDir = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache"
         }
 
-        val parentFile = File(rootDir + File.separator + CLIP_VIDEO_DIR)
+        val parentFile = File(rootDir + File.separator + EDIT_VIDEO_DIR)
+        if (!parentFile.exists()) {
+            parentFile.mkdirs()
+        }
+
+        return parentFile.absolutePath + File.separator
+    }
+
+    private fun getOutputParent(): String{
+        var rootDir = MyApplication.instance.externalCacheDir?.absolutePath ?: ""
+        if (rootDir.isEmpty()) {
+            rootDir = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache"
+        }
+
+        val parentFile = File(rootDir + File.separator + OUTPUT_VIDEO_DIR)
         if (!parentFile.exists()) {
             parentFile.mkdirs()
         }
@@ -196,7 +210,8 @@ object VideoEditorManager: ExecuteCallback {
 
 
     /**---------------------editvideo-------------------------**/
-    private const val CLIP_VIDEO_DIR: String = "zsj_clip_video_folder"
+    private const val EDIT_VIDEO_DIR: String = "zsj_edit_video_folder"
+    private const val OUTPUT_VIDEO_DIR: String = "zsj_output_video_folder"
     // 视频裁剪占总操作的比重，即全部完成视频裁剪，占总进度的10%
     private const val CLIP_PROGRESS_WEIGHT = 0.1f
     // 视频分辨率转换占的总比在，即完成所有视频分辨率转换，占总进度的70%
@@ -216,17 +231,22 @@ object VideoEditorManager: ExecuteCallback {
 
 
     fun editVideos(videoClipList: List<VideoClip>) {
-        if (videoClipList.isEmpty()) {
-            Log.d("edit_video_log","VideoEditorManager editVideos: list is empty,just return")
-            return
-        }
+        try {
+            if (videoClipList.isEmpty()) {
+                Log.d("edit_video_log","VideoEditorManager editVideos: list is empty,just return")
+                return
+            }
 
-        mTotalEditVideoSize = videoClipList.size
-        currentEditState = EditState.INIT
-        GlobalScope.launch {
-            clippedVideoList.clear()
-            scaledVideoList.clear()
-            clipVideos(videoClipList)
+            mTotalEditVideoSize = videoClipList.size
+            currentEditState = EditState.INIT
+            GlobalScope.launch {
+                clippedVideoList.clear()
+                scaledVideoList.clear()
+                clipVideos(videoClipList)
+            }
+        } catch (e: Exception) {
+            Log.d("edit_video_log","VideoEditorManager editVideos: error: ${e.message}")
+            e.printStackTrace()
         }
     }
 
@@ -333,7 +353,53 @@ object VideoEditorManager: ExecuteCallback {
                 break
             }
 
+            if (scaledVideoList.size == mTotalEditVideoSize) {
+                concatVideos(scaledVideoList)
+            }
+
             Log.d("edit_video_log","VideoEditorManager scaleVideos $outputScalePath")
+        }
+    }
+
+    private fun concatVideos(scaledVideos: List<VideoClip>) {
+        try {
+            currentEditState = EditState.CONCATING
+            var concatFile = File(getVideoSaveParent() + "concatFileList.txt")
+            if (concatFile.exists()) {
+                concatFile.delete()
+            }
+
+            concatFile.createNewFile()
+            var concatFileContent = StringBuffer()
+            for (videoClip in scaledVideos) {
+                concatFileContent.append("file '")
+                concatFileContent.append(videoClip.originalFilePath)
+                concatFileContent.append("'\n")
+            }
+            concatFile.writeText(concatFileContent.toString())
+
+            // 导出视频，放在getOutputParent 目录下
+            val outputFile = File(getOutputParent() + "concat_file.mp4")
+            val concatCommand = "-f concat -safe 0 -i ${concatFile.absolutePath} -c copy ${outputFile.absolutePath}"
+            startProgressUpdate()
+            val result = FFmpeg.execute(concatCommand)
+            Log.d("edit_video_log","concat command: $concatCommand, result:$result")
+            if (result == 0) {
+                updateProgressUpdate(CONCAT_PROGRESS_WEIGHT * 100)
+                Log.d("edit_video_log","concat success,edit video finish: ${outputFile.absolutePath}")
+                currentEditState = EditState.FINISHED
+
+                // 删除产生的临时文件
+                val editTmpFileDir = File(getVideoSaveParent())
+                if (editTmpFileDir.exists()) {
+                    editTmpFileDir.deleteRecursively()
+                }
+            } else {
+                onEditVideosFailed("concat video failed filelist:${concatFile.name}")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            onEditVideosFailed("concat video exception!")
         }
     }
 
@@ -342,6 +408,8 @@ object VideoEditorManager: ExecuteCallback {
             return getClipMaxProgress()
         } else if (currentEditState == EditState.SCALING) {
             return getClipMaxProgress() + getScaleMaxProgress()
+        } else if (currentEditState == EditState.CONCATING) {
+            return getClipMaxProgress() + getScaleMaxProgress() + getConcatMaxProgress()
         }
         return 100.0f
     }
@@ -352,6 +420,10 @@ object VideoEditorManager: ExecuteCallback {
             currentSize = mTotalEditVideoSize
         }
         return currentSize * 100 / mTotalEditVideoSize * SCALE_PROGRESS_WEIGHT
+    }
+
+    private fun getConcatMaxProgress(): Float {
+        return CONCAT_PROGRESS_WEIGHT * 100
     }
 
     private fun getClipMaxProgress(): Float {
@@ -367,18 +439,21 @@ object VideoEditorManager: ExecuteCallback {
      */
     private fun updateProgressUpdate(currentProgress: Float) {
         var baseProgress = 0f
-        when (currentEditState) {
+        baseProgress = when (currentEditState) {
             EditState.CLIPPING -> {
-                baseProgress = 0f
+                0f
             }
+
             EditState.SCALING -> {
-                baseProgress = CLIP_PROGRESS_WEIGHT * 100
+                CLIP_PROGRESS_WEIGHT * 100
             }
+
             EditState.CONCATING -> {
-                baseProgress = CLIP_PROGRESS_WEIGHT * 100 + SCALE_PROGRESS_WEIGHT * 100
+                CLIP_PROGRESS_WEIGHT * 100 + SCALE_PROGRESS_WEIGHT * 100
             }
+
             else -> {
-                baseProgress = 0f
+                0f
             }
         }
         mCurrentProgress = baseProgress + currentProgress
