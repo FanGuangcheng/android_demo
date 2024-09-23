@@ -163,7 +163,7 @@ object VideoEditorManager: ExecuteCallback {
 //            cmd.append(" -vf scale=$screenWidth:-1 ") // 导出视频的时候设置分辨率一致
             cmd.append(" -c ")
             cmd.append("copy ")
-            var outputPath = getVideoSaveParent() + "1clip_" +videoClip.videoFileName
+            var outputPath = getVideoSaveTempParent() + "1clip_" +videoClip.videoFileName
             cmd.append(outputPath)
             val executeId = FFmpeg.executeAsync(cmd.toString(), this@VideoEditorManager)
             Log.d("edit_video_log","VideoEditorManager clip executeId:$executeId,  command: $cmd")
@@ -180,7 +180,7 @@ object VideoEditorManager: ExecuteCallback {
         return String.format("%02d:%02d:%02d.%03d", hours, minutes, seconds, milliseconds)
     }
 
-    private fun getVideoSaveParent(): String{
+    private fun getVideoSaveTempParent(): String{
         var rootDir = MyApplication.instance.externalCacheDir?.absolutePath ?: ""
         if (rootDir.isEmpty()) {
             rootDir = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache"
@@ -194,7 +194,7 @@ object VideoEditorManager: ExecuteCallback {
         return parentFile.absolutePath + File.separator
     }
 
-    private fun getOutputParent(): String{
+    private fun getVideoOutputParent(): String{
         var rootDir = MyApplication.instance.externalCacheDir?.absolutePath ?: ""
         if (rootDir.isEmpty()) {
             rootDir = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache"
@@ -228,7 +228,7 @@ object VideoEditorManager: ExecuteCallback {
     private var mCurrentProgress: Float = 0f
     private var progressJob: Job? = null
     private var mTotalEditVideoSize: Int = 1
-
+    private var mThumbnailImg: String = ""
 
     fun editVideos(videoClipList: List<VideoClip>) {
         try {
@@ -242,11 +242,28 @@ object VideoEditorManager: ExecuteCallback {
             GlobalScope.launch {
                 clippedVideoList.clear()
                 scaledVideoList.clear()
-                clipVideos(videoClipList)
+                saveThumbnail(videoClipList)
             }
         } catch (e: Exception) {
             Log.d("edit_video_log","VideoEditorManager editVideos: error: ${e.message}")
             e.printStackTrace()
+        }
+    }
+
+    private fun saveThumbnail(videoClipList: List<VideoClip>) {
+        val videoClip = videoClipList[0]
+        val cmd = StringBuffer()
+        cmd.append("-i ")
+        cmd.append(videoClip.originalFilePath)
+        cmd.append(" -vf \"thumbnail\" -frames:v 1 ")
+        val outputImg = getVideoOutputParent() + "edit_video_thumbnail.png"
+        cmd.append(outputImg)
+        val result = FFmpeg.execute(cmd.toString())
+        if (result == 0) {
+            mThumbnailImg = outputImg
+            clipVideos(videoClipList)
+        } else {
+            onEditVideosFailed("save thumbnail failed!")
         }
     }
 
@@ -265,7 +282,7 @@ object VideoEditorManager: ExecuteCallback {
             cmd.append(" -c ")
             cmd.append("copy ")
             val outputFileName = "clip_" +videoClip.videoFileName
-            val outputPath = getVideoSaveParent() + outputFileName
+            val outputPath = getVideoSaveTempParent() + outputFileName
             cmd.append(outputPath)
             // 开始执行，慢慢的增加进度
             startProgressUpdate()
@@ -313,7 +330,7 @@ object VideoEditorManager: ExecuteCallback {
         for (videoClip in clippedVideos) {
             val inputFile: File = File(videoClip.originalFilePath)
             val outputFileName = "scale_" + inputFile.name
-            var outputScalePath = getVideoSaveParent() + outputFileName
+            var outputScalePath = getVideoSaveTempParent() + outputFileName
             // 开始执行，慢慢的增加进度
             startProgressUpdate()
             val  videoAspectRatio = videoClip.width.toFloat() / videoClip.height.toFloat()
@@ -364,7 +381,7 @@ object VideoEditorManager: ExecuteCallback {
     private fun concatVideos(scaledVideos: List<VideoClip>) {
         try {
             currentEditState = EditState.CONCATING
-            var concatFile = File(getVideoSaveParent() + "concatFileList.txt")
+            var concatFile = File(getVideoSaveTempParent() + "concatFileList.txt")
             if (concatFile.exists()) {
                 concatFile.delete()
             }
@@ -379,7 +396,7 @@ object VideoEditorManager: ExecuteCallback {
             concatFile.writeText(concatFileContent.toString())
 
             // 导出视频，放在getOutputParent 目录下
-            val outputFile = File(getOutputParent() + "concat_file.mp4")
+            val outputFile = File(getVideoOutputParent() + "concat_file.mp4")
             val concatCommand = "-f concat -safe 0 -i ${concatFile.absolutePath} -c copy ${outputFile.absolutePath}"
             startProgressUpdate()
             val result = FFmpeg.execute(concatCommand)
@@ -390,7 +407,7 @@ object VideoEditorManager: ExecuteCallback {
                 currentEditState = EditState.FINISHED
 
                 // 删除产生的临时文件
-                val editTmpFileDir = File(getVideoSaveParent())
+                val editTmpFileDir = File(getVideoSaveTempParent())
                 if (editTmpFileDir.exists()) {
                     editTmpFileDir.deleteRecursively()
                 }
