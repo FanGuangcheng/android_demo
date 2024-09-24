@@ -24,31 +24,29 @@ object VideoEditorManager: ExecuteCallback {
 
 
 //            /*************************************start  先转成ts再合并，但是视频的分辨率依然被缩放了**********************************************/
-//            val outputts1 = getVideoClipSaveParent() + "temp_ts_clip_1722995979106.ts"
-//            val resultts1 = FFmpeg.execute("-i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/1clip_1722995979106.mp4 -c:v copy $outputts1")
-//            Log.d("edit_video_log","VideoEditorManager  resultts1 :$resultts1")
-//
-//            val outputts2 = getVideoClipSaveParent() + "temp_ts_clip_1723032638188.ts"
-//            val resultts2 = FFmpeg.execute("-i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/1clip_1723032638188.mp4 -c:v copy $outputts2")
-//            Log.d("edit_video_log","VideoEditorManager  resultts2 :$resultts2")
-//
-//
-//            var concatCommand = "-i \"concat:$outputts1|$outputts2\" -c copy " + getVideoClipSaveParent() + "concat_ts_video.mp4"
-//            Log.d("edit_video_log","VideoEditorManager  concatCommand :$concatCommand")
-//
-//            val result = FFmpeg.execute(concatCommand)
-//            Log.d("edit_video_log","VideoEditorManager  result :$result")
-//            Log.d("edit_video_log","VideoEditorManager finish ")
-//
-//            /*************************************end  先转成ts再合并，但是视频的分辨率依然被缩放了**********************************************/
+            val outputts1 = getVideoSaveTempParent() + "temp_ts_clip_1722995979106.ts"
+            val resultts1 = FFmpeg.execute("-i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_edit_video_folder/scale_clip_hengping67890.mp4 -c:v copy $outputts1")
+            Log.d("edit_video_log","VideoEditorManager  resultts1 :$resultts1")
+
+            val outputts2 = getVideoSaveTempParent() + "temp_ts_clip_1723032638188.ts"
+            val resultts2 = FFmpeg.execute("-i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_edit_video_folder/scale_clip_shuping12345.mp4 -c:v copy $outputts2")
+            Log.d("edit_video_log","VideoEditorManager  resultts2 :$resultts2")
 
 
-            /**+++++++++++++++++++++++++++++++++++++写本地文件，然后再读取文件列表合并，视频分辨率依然被改变了+++++++++++++++++++++++++++++++++++++++++++++++**/
-            val result = FFmpeg.execute("-f concat -safe 0 -i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/fileconcat.txt -c copy /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/concat_file.mp4")
+            var concatCommand = "-i \"concat:$outputts1|$outputts2\" -c copy " + getVideoOutputParent() + "concat_ts_video.mp4"
+            Log.d("edit_video_log","VideoEditorManager  concatCommand :$concatCommand")
+
+            val result = FFmpeg.execute(concatCommand)
             Log.d("edit_video_log","VideoEditorManager  result :$result")
-
             Log.d("edit_video_log","VideoEditorManager finish ")
-            /**+++++++++++++++++++++++++++++++++++++写本地文件，然后再读取文件列表合并，视频分辨率依然被改变了+++++++++++++++++++++++++++++++++++++++++++++++**/
+
+            /*************************************end  先转成ts再合并，但是视频的分辨率依然被缩放了**********************************************/
+//            /**+++++++++++++++++++++++++++++++++++++写本地文件，然后再读取文件列表合并，视频分辨率依然被改变了+++++++++++++++++++++++++++++++++++++++++++++++**/
+//            val result = FFmpeg.execute("-f concat -safe 0 -i /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/fileconcat.txt -c copy /storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/concat_file.mp4")
+//            Log.d("edit_video_log","VideoEditorManager  result :$result")
+//
+//            Log.d("edit_video_log","VideoEditorManager finish ")
+//            /**+++++++++++++++++++++++++++++++++++++写本地文件，然后再读取文件列表合并，视频分辨率依然被改变了+++++++++++++++++++++++++++++++++++++++++++++++**/
 
 
         }
@@ -251,6 +249,7 @@ object VideoEditorManager: ExecuteCallback {
     }
 
     private fun saveThumbnail(videoClipList: List<VideoClip>) {
+        Log.d("edit_video_log","VideoEditorManager saveThumbnail: start")
         val videoClip = videoClipList[0]
         val cmd = StringBuffer()
         cmd.append("-i ")
@@ -317,6 +316,7 @@ object VideoEditorManager: ExecuteCallback {
     }
 
     private fun scaleVideos(clippedVideos: List<VideoClip>) {
+        Log.d("edit_video_log","VideoEditorManager scaleVideos: start")
         currentEditState = EditState.SCALING
         var screenWidth = MyApplication.instance.getScreenWidth()
         if (screenWidth % 2 != 0) {
@@ -371,34 +371,74 @@ object VideoEditorManager: ExecuteCallback {
             }
 
             if (scaledVideoList.size == mTotalEditVideoSize) {
-                concatVideos(scaledVideoList)
+                convertTsVideos(scaledVideoList)
             }
 
             Log.d("edit_video_log","VideoEditorManager scaleVideos $outputScalePath")
         }
     }
 
-    private fun concatVideos(scaledVideos: List<VideoClip>) {
+    /**
+     * 先将视频转换为ts，再进行拼接
+     */
+    private fun convertTsVideos(scaledVideos: List<VideoClip>) {
         try {
+            Log.d("edit_video_log","VideoEditorManager concatTsVideos: start")
             currentEditState = EditState.CONCATING
-            var concatFile = File(getVideoSaveTempParent() + "concatFileList.txt")
-            if (concatFile.exists()) {
-                concatFile.delete()
-            }
-
-            concatFile.createNewFile()
-            var concatFileContent = StringBuffer()
+            val convertTsVideoList = ArrayList<VideoClip>()
             for (videoClip in scaledVideos) {
-                concatFileContent.append("file '")
-                concatFileContent.append(videoClip.originalFilePath)
-                concatFileContent.append("'\n")
+                val inputFile: File = File(videoClip.originalFilePath)
+                val outputFileName = "concat_" + getFileNameWithoutExtension(inputFile.name) + ".ts"
+                val outputScalePath = getVideoSaveTempParent() + outputFileName
+                // 开始执行，慢慢的增加进度
+                startProgressUpdate()
+                val convertTsCommand = "-i ${inputFile.absolutePath} -c:v copy $outputScalePath"
+
+                val executeResult = FFmpeg.execute(convertTsCommand)
+                if (executeResult == 0) {
+                    val convertTsVideoClip = VideoClip(
+                        videoClip.id,
+                        outputScalePath,
+                        outputFileName,
+                        videoClip.originalDurationMs,
+                        videoClip.startAtMs,
+                        videoClip.endAtMs,
+                        videoClip.isSelected,
+                        videoClip.width,
+                        videoClip.height
+                    )
+                    convertTsVideoList.add(convertTsVideoClip)
+                    // 操作完成，更新当前进度
+                } else {
+                    onEditVideosFailed("concat ts video failed path:${inputFile.name}")
+                    break
+                }
+
+                if (convertTsVideoList.size == mTotalEditVideoSize) {
+                    concatVideos(convertTsVideoList)
+                }
+
+                Log.d("edit_video_log","VideoEditorManager concatTsVideos $outputScalePath")
             }
-            concatFile.writeText(concatFileContent.toString())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            onEditVideosFailed("concat video exception!")
+        }
+    }
+
+    private fun concatVideos(tsVideos: List<VideoClip>) {
+        try {
+            Log.d("edit_video_log","VideoEditorManager concatVideos: start")
+            val concatFile = File(getVideoSaveTempParent() + "concatFileList.txt")
 
             // 导出视频，放在getOutputParent 目录下
             val outputFile = File(getVideoOutputParent() + "concat_file.mp4")
-            val concatCommand = "-f concat -safe 0 -i ${concatFile.absolutePath} -c copy ${outputFile.absolutePath}"
-            startProgressUpdate()
+            val concatList = StringBuffer()
+            for (tsVideo in tsVideos) {
+                concatList.append("${tsVideo.originalFilePath}|")
+            }
+            concatList.deleteCharAt(concatList.length - 1)
+            var concatCommand = "-i \"concat:${concatList}\" -c copy ${outputFile.absolutePath}"
             val result = FFmpeg.execute(concatCommand)
             Log.d("edit_video_log","concat command: $concatCommand, result:$result")
             if (result == 0) {
@@ -406,11 +446,11 @@ object VideoEditorManager: ExecuteCallback {
                 Log.d("edit_video_log","concat success,edit video finish: ${outputFile.absolutePath}")
                 currentEditState = EditState.FINISHED
 
-                // 删除产生的临时文件
-                val editTmpFileDir = File(getVideoSaveTempParent())
-                if (editTmpFileDir.exists()) {
-                    editTmpFileDir.deleteRecursively()
-                }
+                // 删除产生的临时文件 todo fgc 暂不删除
+//                val editTmpFileDir = File(getVideoSaveTempParent())
+//                if (editTmpFileDir.exists()) {
+//                    editTmpFileDir.deleteRecursively()
+//                }
             } else {
                 onEditVideosFailed("concat video failed filelist:${concatFile.name}")
             }
@@ -440,7 +480,8 @@ object VideoEditorManager: ExecuteCallback {
     }
 
     private fun getConcatMaxProgress(): Float {
-        return CONCAT_PROGRESS_WEIGHT * 100
+        // concat的最大值停在0.95处
+        return (CONCAT_PROGRESS_WEIGHT - 0.05f) * 100
     }
 
     private fun getClipMaxProgress(): Float {
@@ -497,6 +538,15 @@ object VideoEditorManager: ExecuteCallback {
         // todo fgc 停止编辑视频，通知任务失败相关的逻辑，并且删除相关过程中间产物
         Log.d("edit_video_log","VideoEditorManager apply callback, editvideos failed, $msg")
 
+    }
+
+    fun getFileNameWithoutExtension(filePath: String): String {
+        val lastIndexOfDot = filePath.lastIndexOf(".")
+        return if (lastIndexOfDot > 0) {
+            filePath.substring(0, lastIndexOfDot)
+        } else {
+            filePath
+        }
     }
 
     enum class EditState {

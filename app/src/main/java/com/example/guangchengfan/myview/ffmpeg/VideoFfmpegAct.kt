@@ -55,8 +55,12 @@ class VideoFfmpegAct : AppCompatActivity() {
             GlobalScope.launch {
                 val videoList = ArrayList<VideoClip>()
                 // 红米测试机
-                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1722995979106.mp4", "1722995979106.mp4", 11000, 5000, 9000, false, 1080, 2400))
-                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1723032638188.mp4", "1723032638188.mp4", 13000, 8000, 12000, false, 1920, 1080))
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1722995979106.mp4", "1722995979106.mp4", 11000, 5000, 9000, false, 1080, 2400))
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1723032638188.mp4", "1723032638188.mp4", 13000, 8000, 12000, false, 1920, 1080))
+                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/hengping67890.mp4", "hengping67890.mp4", 8000, 0, 4000, false, 1920, 1080))
+                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/shuping12345.mp4", "shuping12345.mp4", 8000, 4000, 8000, false, 1080, 2400))
+
+
 
                 // 华为p30pro测试机
 //                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/153611.mp4", "153611.mp4", 6000, 1000, 4000, false))

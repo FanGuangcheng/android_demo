@@ -26,6 +26,6 @@ data class VideoClip(
         }
 
     override fun toString(): String {
-        return "VideoClip(id='$id', originalFilePath='$originalFilePath', videoFileName='$videoFileName', originalDurationMs=$originalDurationMs, startAtMs=$startAtMs, endAtMs=$endAtMs, isSelected=$isSelected)"
+        return "VideoClip(id='$id', originalFilePath='$originalFilePath', videoFileName='$videoFileName', originalDurationMs=$originalDurationMs, startAtMs=$startAtMs, endAtMs=$endAtMs, isSelected=$isSelected), width=$width, height=$height"
     }
 }
