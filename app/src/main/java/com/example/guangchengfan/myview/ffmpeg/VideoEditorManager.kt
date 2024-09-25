@@ -249,14 +249,14 @@ object VideoEditorManager: ExecuteCallback {
     }
 
     private fun saveThumbnail(videoClipList: List<VideoClip>) {
-        Log.d("edit_video_log","VideoEditorManager saveThumbnail: start")
         val videoClip = videoClipList[0]
         val cmd = StringBuffer()
         cmd.append("-i ")
         cmd.append(videoClip.originalFilePath)
-        cmd.append(" -vf \"thumbnail\" -frames:v 1 ")
-        val outputImg = getVideoOutputParent() + "edit_video_thumbnail.png"
+        cmd.append(" -vframes 1 -q:v 15 -vf \"scale=750:-1\" ")
+        val outputImg = getVideoOutputParent() + "1edit_video_thumbnail.png"
         cmd.append(outputImg)
+        Log.d("edit_video_log","VideoEditorManager saveThumbnail: start: $cmd")
         val result = FFmpeg.execute(cmd.toString())
         if (result == 0) {
             mThumbnailImg = outputImg
