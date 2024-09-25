@@ -337,14 +337,17 @@ object VideoEditorManager: ExecuteCallback {
             val screenAspectRatio = screenWidth.toFloat() / screenHeight.toFloat()
             val screenHwRatio = screenHeight.toFloat() / screenWidth.toFloat()
 
+            val str: String = "x"
 
             // todo fgc 暂时用不同颜色进行 填充，晚点都改为黑色
             var scaleCommand = if (videoAspectRatio >= screenAspectRatio) {
                 // 横屏 宽视频
-                "-i ${inputFile.absolutePath} -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
+                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
+//                "-i ${inputFile.absolutePath} -vf scale $screenWidth:$screenHeight pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
             } else {
                 // 竖屏 窄视频
-                "-i ${inputFile.absolutePath} -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red $outputScalePath"
+                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red $outputScalePath"
+//                "-i ${inputFile.absolutePath} -vf scale $screenWidth:$screenHeight pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red $outputScalePath"
             }
 
             val executeResult = FFmpeg.execute(scaleCommand)
