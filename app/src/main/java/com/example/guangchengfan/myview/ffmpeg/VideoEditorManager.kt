@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.me.kevin.video.edit.VideoClip
 import java.io.File
+import kotlin.math.roundToInt
 
 object VideoEditorManager: ExecuteCallback {
     override fun apply(executionId: Long, returnCode: Int) {
@@ -84,6 +85,86 @@ object VideoEditorManager: ExecuteCallback {
 
     }
 
+    fun testScaleVideos(clippedVideos: List<VideoClip>) {
+        Log.d("edit_video_log","VideoEditorManager testScaleVideos: -------  start")
+        var screenWidth = MyApplication.instance.getScreenWidth()
+        if (screenWidth % 2 != 0) {
+            screenWidth += 1
+        }
+        var screenHeight = MyApplication.instance.getScreenHeight()
+        if (screenHeight % 2 != 0) {
+            screenHeight += 1
+        }
+//        screenWidth /= 2
+//        screenHeight /= 2
+
+        // 只需要14s即可导出
+//        "-i ${inputFile.absolutePath} -s ${screenWidth/2}$str${screenHeight/2} -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
+        // 需要20s即可导出
+//        "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
+        // 需要39s即可导出
+//        "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
+
+        val totalSize = clippedVideos.size
+        val testScaledVideoList = ArrayList<VideoClip>()
+        for ((index, videoClip) in clippedVideos.withIndex()) {
+            val inputFile: File = File(videoClip.originalFilePath)
+            val outputFileName = "test_scale_" + inputFile.name
+            var outputScalePath = getVideoSaveTempParent() + outputFileName
+            // 开始执行，慢慢的增加进度
+            val  videoAspectRatio = videoClip.width.toFloat() / videoClip.height.toFloat()
+            var screenAspectRatio = screenWidth.toFloat() / screenHeight.toFloat()
+            var screenHwRatio = (screenHeight.toFloat() / screenWidth.toFloat())
+            screenHwRatio = (screenHwRatio * 100).roundToInt() / 100f
+            screenAspectRatio = (screenAspectRatio * 100).roundToInt() / 100f
+            val str = "x"
+
+            // todo fgc 暂时用不同颜色进行 填充，晚点都改为黑色
+            var scaleCommand = if (videoAspectRatio >= screenAspectRatio) {
+                // 横屏 宽视频
+//                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
+                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
+            } else {
+                // 竖屏 窄视频
+//                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
+                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red $outputScalePath"
+            }
+
+//                -i input.mp4 -vf scale=1280:-1 output.mp4
+//            scaleCommand = "-i ${inputFile.absolutePath} -vf scale=$screenWidth:-1 -preset veryfast $outputScalePath"
+
+            Log.d("edit_video_log","scale $index video,command: $scaleCommand")
+
+            val executeResult = FFmpeg.execute(scaleCommand)
+            Log.d("edit_video_log","scale $index video,command: $executeResult")
+
+            if (executeResult == 0) {
+                val scaledVideoClip = VideoClip(
+                    videoClip.id,
+                    outputScalePath,
+                    outputFileName,
+                    videoClip.originalDurationMs,
+                    videoClip.startAtMs,
+                    videoClip.endAtMs,
+                    videoClip.isSelected,
+                    videoClip.width,
+                    videoClip.height
+                )
+                testScaledVideoList.add(scaledVideoClip)
+                // 操作完成，更新当前进度
+            } else {
+                onEditVideosFailed("************** testScaleVideos video failed ************** scaleCommand:$scaleCommand")
+                break
+            }
+        }
+        if (testScaledVideoList.size == totalSize) {
+            Log.d("edit_video_log","VideoEditorManager testScaleVideos end with all success: +++++++")
+        } else {
+            Log.d("edit_video_log","VideoEditorManager testScaleVideos end with part failed: +++++++")
+        }
+    }
+
+
     fun scaleVideo() {
 
         var screenWidth = MyApplication.instance.getScreenWidth()
@@ -116,32 +197,6 @@ object VideoEditorManager: ExecuteCallback {
 
         val scale2 = FFmpeg.execute(command2)
         Log.d("edit_video_log","VideoEditorManager scaleVideo ####### scale2: $scale2, command2: $command2")
-
-
-//        /**+++++++++++++++++++++++++++++++++++++ scale 转换后视频质量太低 +++++++++++++++++++++++++++++++++++++++++++++++**/
-//        Log.d("edit_video_log","VideoEditorManager scaleVideo start: ***********")
-//
-//        val screenWidth = MyApplication.instance.getScreenWidth()
-//
-//
-////        var input1 = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/2clip_1722995979106.mp4"
-////        var output1 = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/2scale_1722995979106.mp4"
-////        val command1 = "-i $input1 -vf \"scale=$screenWidth:-1\" -c:v -c:a copy $output1"
-//////        val command1 = "-i $input1 -vf scale=$screenWidth:-1, pad=iw+(ow-iw)/2:(ow-iw)/2:0x000000 -preset slow -crf 18 $output1"
-//////        val command1 = "-i $input1 -vf \"scale=iw*9/16:ih\" -c:a copy $output1"
-////        val scale1 = FFmpeg.execute(command1)
-////        Log.d("edit_video_log","VideoEditorManager scaleVideo scale1: $scale1, command1: $command1")
-//
-//
-//
-//        var input2 = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/2clip_1723032638188.mp4"
-//        var output2 = "/storage/emulated/0/Android/data/com.example.guangchengfan.myview/cache/zsj_clip_video_folder/2scale_1723032638188.mp4"
-//        val command2 = "-i $input2 -vf scale=$screenWidth:-1 -c:a $output2"
-//
-//        val scale2 = FFmpeg.execute(command2)
-//        Log.d("edit_video_log","VideoEditorManager scaleVideo scale2: $scale2, command2: $command2")
-//        /**+++++++++++++++++++++++++++++++++++++ scale 转换后视频质量太低 +++++++++++++++++++++++++++++++++++++++++++++++**/
-
     }
 
     fun clipVideo(videoClipList: List<VideoClip>) {

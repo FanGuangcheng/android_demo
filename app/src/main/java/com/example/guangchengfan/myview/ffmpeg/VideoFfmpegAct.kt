@@ -39,7 +39,21 @@ class VideoFfmpegAct : AppCompatActivity() {
         findViewById<Button>(R.id.btn_scale_video).setOnClickListener {
 
             GlobalScope.launch {
-                VideoEditorManager.scaleVideo()
+//                VideoEditorManager.scaleVideo()
+                val videoList = ArrayList<VideoClip>()
+                // 红米测试机
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1722995979106.mp4", "1722995979106.mp4", 11000, 5000, 9000, false, 1080, 2400))
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1723032638188.mp4", "1723032638188.mp4", 13000, 8000, 12000, false, 1920, 1080))
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/hengping67890.mp4", "hengping67890.mp4", 8000, 0, 8000, false, 1920, 1080))
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/shuping12345.mp4", "shuping12345.mp4", 8000, 0, 8000, false, 1080, 2400))
+
+
+                // 华为p30pro测试机
+//                VideoClip(id='883d8d55-073c-48e5-bf2d-8cbc58d29fba', originalFilePath='/storage/emulated/0/aserbaoCamera/153611.mp4', videoFileName='153611.mp4', originalDurationMs=6402, startAtMs=0, endAtMs=6402, isSelected=false), width=1080, height=1920
+//                VideoClip(id='105bc072-f320-4471-9ef2-98108f1a1f07', originalFilePath='/storage/emulated/0/aserbaoCamera/153666.mp4', videoFileName='153666.mp4', originalDurationMs=10773, startAtMs=0, endAtMs=10773, isSelected=false), width=1080, height=1920
+                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/153611.mp4", "153611.mp4", 6402, 0, 6402, false, 1080, 1920))
+                videoList.add(VideoClip("1001", "/storage/emulated/0/aserbaoCamera/153666.mp4", "153666.mp4", 10773, 0, 10773, false, 1080, 1920))
+                VideoEditorManager.testScaleVideos(videoList)
             }
         }
 
@@ -57,14 +71,15 @@ class VideoFfmpegAct : AppCompatActivity() {
                 // 红米测试机
 //                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1722995979106.mp4", "1722995979106.mp4", 11000, 5000, 9000, false, 1080, 2400))
 //                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/1723032638188.mp4", "1723032638188.mp4", 13000, 8000, 12000, false, 1920, 1080))
-                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/hengping67890.mp4", "hengping67890.mp4", 8000, 0, 8000, false, 1920, 1080))
-                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/shuping12345.mp4", "shuping12345.mp4", 8000, 0, 8000, false, 1080, 2400))
-
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/hengping67890.mp4", "hengping67890.mp4", 8000, 0, 8000, false, 1920, 1080))
+//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/shuping12345.mp4", "shuping12345.mp4", 8000, 0, 8000, false, 1080, 2400))
 
 
                 // 华为p30pro测试机
-//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/153611.mp4", "153611.mp4", 6000, 1000, 4000, false))
-//                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/153666.mp4", "153666.mp4", 10000, 3000, 8000, false))
+//                VideoClip(id='883d8d55-073c-48e5-bf2d-8cbc58d29fba', originalFilePath='/storage/emulated/0/aserbaoCamera/153611.mp4', videoFileName='153611.mp4', originalDurationMs=6402, startAtMs=0, endAtMs=6402, isSelected=false), width=1080, height=1920
+//                VideoClip(id='105bc072-f320-4471-9ef2-98108f1a1f07', originalFilePath='/storage/emulated/0/aserbaoCamera/153666.mp4', videoFileName='153666.mp4', originalDurationMs=10773, startAtMs=0, endAtMs=10773, isSelected=false), width=1080, height=1920
+                videoList.add(VideoClip("1000", "/storage/emulated/0/aserbaoCamera/153611.mp4", "153611.mp4", 6402, 0, 6402, false, 1080, 1920))
+                videoList.add(VideoClip("1001", "/storage/emulated/0/aserbaoCamera/153666.mp4", "153666.mp4", 10773, 0, 10773, false, 1080, 1920))
                 VideoEditorManager.editVideos(videoList)
             }
         }
