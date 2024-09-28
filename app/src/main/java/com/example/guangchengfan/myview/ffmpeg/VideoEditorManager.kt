@@ -122,12 +122,10 @@ object VideoEditorManager: ExecuteCallback {
             // todo fgc 暂时用不同颜色进行 填充，晚点都改为黑色
             var scaleCommand = if (videoAspectRatio >= screenAspectRatio) {
                 // 横屏 宽视频
-//                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
-                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
+                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
             } else {
                 // 竖屏 窄视频
-//                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
-                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red $outputScalePath"
+                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
             }
 
 //                -i input.mp4 -vf scale=1280:-1 output.mp4
@@ -381,32 +379,42 @@ object VideoEditorManager: ExecuteCallback {
         if (screenHeight % 2 != 0) {
             screenHeight += 1
         }
+//        screenWidth /= 2
+//        screenHeight /= 2
 
-        for (videoClip in clippedVideos) {
+        // 只需要14s即可导出
+//        "-i ${inputFile.absolutePath} -s ${screenWidth/2}$str${screenHeight/2} -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
+        // 需要20s即可导出
+//        "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
+        // 需要39s即可导出
+//        "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
+
+
+        for ((index, videoClip) in clippedVideos.withIndex()) {
             val inputFile: File = File(videoClip.originalFilePath)
             val outputFileName = "scale_" + inputFile.name
             var outputScalePath = getVideoSaveTempParent() + outputFileName
             // 开始执行，慢慢的增加进度
             startProgressUpdate()
             val  videoAspectRatio = videoClip.width.toFloat() / videoClip.height.toFloat()
-            val screenAspectRatio = screenWidth.toFloat() / screenHeight.toFloat()
-            val screenHwRatio = screenHeight.toFloat() / screenWidth.toFloat()
-
-            val str: String = "x"
+            var screenAspectRatio = screenWidth.toFloat() / screenHeight.toFloat()
+            var screenHwRatio = (screenHeight.toFloat() / screenWidth.toFloat())
+            screenHwRatio = (screenHwRatio * 100).roundToInt() / 100f
+            screenAspectRatio = (screenAspectRatio * 100).roundToInt() / 100f
+            val str = "x"
 
             // todo fgc 暂时用不同颜色进行 填充，晚点都改为黑色
             var scaleCommand = if (videoAspectRatio >= screenAspectRatio) {
                 // 横屏 宽视频
-                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
-//                "-i ${inputFile.absolutePath} -vf scale $screenWidth:$screenHeight pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue $outputScalePath"
+                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=iw:iw*$screenHwRatio:0:(oh-ih)/2:blue -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
             } else {
                 // 竖屏 窄视频
-                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red $outputScalePath"
-//                "-i ${inputFile.absolutePath} -vf scale $screenWidth:$screenHeight pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red $outputScalePath"
+                "-i ${inputFile.absolutePath} -s $screenWidth$str$screenHeight -vf pad=ih*$screenAspectRatio:ih:(ow-iw)/2:0:red -preset veryfast -c:v libx264 -c:a copy $outputScalePath"
             }
 
+            Log.d("edit_video_log","scale $index video,command: $scaleCommand")
             val executeResult = FFmpeg.execute(scaleCommand)
-            Log.d("edit_video_log","scale command: $scaleCommand")
+            Log.d("edit_video_log","scale $index video,command: $executeResult")
 
             if (executeResult == 0) {
                 val scaledVideoClip = VideoClip(
@@ -424,15 +432,16 @@ object VideoEditorManager: ExecuteCallback {
                 // 操作完成，更新当前进度
                 updateProgressUpdate(scaledVideoList.size * 100 / mTotalEditVideoSize * SCALE_PROGRESS_WEIGHT)
             } else {
-                onEditVideosFailed("scale video failed path:${inputFile.name}")
+                onEditVideosFailed("************** testScaleVideos video failed ************** scaleCommand:$scaleCommand")
                 break
             }
 
             if (scaledVideoList.size == mTotalEditVideoSize) {
+                Log.d("edit_video_log","VideoEditorManager testScaleVideos end with all success: +++++++")
                 convertTsVideos(scaledVideoList)
+            } else {
+                Log.d("edit_video_log","VideoEditorManager testScaleVideos end with part failed: +++++++")
             }
-
-            Log.d("edit_video_log","VideoEditorManager scaleVideos $outputScalePath")
         }
     }
 
