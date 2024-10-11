@@ -197,6 +197,44 @@ object VideoEditorManager: ExecuteCallback {
         Log.d("edit_video_log","VideoEditorManager scaleVideo ####### scale2: $scale2, command2: $command2")
     }
 
+    fun getVideoInfo(videoClipList: List<VideoClip>) {
+        for (videoClip in videoClipList) {
+            Log.d("edit_video_log","VideoEditorManager videoClip detail: $videoClip")
+
+//        ffmpeg -v error -i input.mp4 -f null -
+            val cmd = StringBuffer()
+            cmd.append("-v error ")
+            cmd.append("-i ")
+            cmd.append(videoClip.originalFilePath)
+            cmd.append(" -f null - ")
+            val executeId = FFmpeg.executeAsync(cmd.toString(), this@VideoEditorManager)
+            Log.d("edit_video_log","VideoEditorManager getVideoInfo executeId:$executeId,  command: $cmd")
+        }
+    }
+
+    fun clipVideoNew(videoClipList: List<VideoClip>) {
+        for (videoClip in videoClipList) {
+            Log.d("edit_video_log","VideoEditorManager videoClip detail: $videoClip")
+
+//            ffmpeg -i input.mp4 -ss 00:00:10.000 -to 00:00:20.000 -c copy output.mp4
+            val cmd = StringBuffer()
+            cmd.append("-i ")
+            cmd.append(videoClip.originalFilePath)
+            cmd.append(" -ss ")
+            cmd.append(formatDuration(videoClip.startAtMs))
+            cmd.append(" -to ")
+            cmd.append(formatDuration(videoClip.endAtMs))
+
+            cmd.append(" ")
+            var outputPath = getVideoSaveTempParent() + "2clip_" +videoClip.videoFileName
+            cmd.append(outputPath)
+            val executeId = FFmpeg.executeAsync(cmd.toString(), this@VideoEditorManager)
+            Log.d("edit_video_log","VideoEditorManager clip executeId:$executeId,  command: $cmd")
+
+        }
+    }
+
+
     fun clipVideo(videoClipList: List<VideoClip>) {
         for (videoClip in videoClipList) {
             Log.d("edit_video_log","VideoEditorManager videoClip detail: $videoClip")
@@ -210,8 +248,6 @@ object VideoEditorManager: ExecuteCallback {
             cmd.append(" -to ")
             cmd.append(formatDuration(videoClip.endAtMs))
 
-//            val screenWidth = MyApplication.instance.getScreenWidth()
-//            cmd.append(" -vf scale=$screenWidth:-1 ") // 导出视频的时候设置分辨率一致
             cmd.append(" -c ")
             cmd.append("copy ")
             var outputPath = getVideoSaveTempParent() + "1clip_" +videoClip.videoFileName
@@ -331,8 +367,11 @@ object VideoEditorManager: ExecuteCallback {
             cmd.append(formatDuration(videoClip.startAtMs))
             cmd.append(" -to ")
             cmd.append(formatDuration(videoClip.endAtMs))
-            cmd.append(" -c ")
-            cmd.append("copy ")
+            cmd.append(" ")
+
+            // z视介自己拍的视频，缺少音频信息，因此使用 使用 -c copy 命令会导致复制音频失败
+//            cmd.append(" -c ")
+//            cmd.append("copy ")
             val outputFileName = "clip_" +videoClip.videoFileName
             val outputPath = getVideoSaveTempParent() + outputFileName
             cmd.append(outputPath)
