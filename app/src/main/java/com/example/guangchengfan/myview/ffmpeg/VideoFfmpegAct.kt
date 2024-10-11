@@ -33,7 +33,7 @@ class VideoFfmpegAct : AppCompatActivity() {
 //                videoList.add(VideoClip("1000", "/storage/emulated/0/DCIM/Camera/2024fgcccc.mp4", "2024fgcccc.mp4", 4000, 0, 4000, false))
 
                 // z视介自己拍的视频，缺少音频信息，因此使用 使用 -c copy 命令会导致复制音频失败
-                // VideoEditorManager.clipVideo(videoList)
+                // VideoEditorManager.clipVideo(videoList) 
                 // 去掉 -c copy 命令
                 VideoEditorManager.clipVideoNew(videoList)
 
