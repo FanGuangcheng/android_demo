@@ -99,5 +99,27 @@ class VideoFfmpegAct : AppCompatActivity() {
             }
         }
 
+        findViewById<Button>(R.id.btn_test_save_frame).setOnClickListener {
+            GlobalScope.launch {
+                val videoList = ArrayList<VideoClip>()
+                // 华为p30pro测试机
+                videoList.add(
+                    VideoClip(
+                        "1000",
+                        "/storage/emulated/0/aserbaoCamera/153611.mp4",
+                        "153611.mp4",
+                        6402,
+                        0,
+                        6402,
+                        false,
+                        1080,
+                        1920
+                    )
+                )
+                VideoEditorManager.saveVideoFrames(videoList)
+            }
+        }
+
+
     }
 }

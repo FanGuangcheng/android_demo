@@ -640,6 +640,43 @@ object VideoEditorManager: ExecuteCallback {
         }
     }
 
+    private const val FRAME_SAVE_FPS: Int = 2
+    // 保存帧图片的时间间隔，暂定为500ms保存一张
+    private const val INTERVAL_SAVE_FRAME: Int = 1000 / FRAME_SAVE_FPS
+    private const val FRAME_NAME_FORMAT: String = "zsj_frame_%04d.png"
+
+    fun saveVideoFrames(videoClipList: List<VideoClip>) {
+        //            ffmpeg -ss 00:00:30 -i 666051400.mp4 -vframes 1 0.jpg
+
+
+        Log.d("edit_video_log","VideoEditorManager saveVideoFrames: start")
+        val videoClip = videoClipList[0]
+        val cmd = StringBuffer()
+        val videoFile = File(videoClip.originalFilePath)
+
+        cmd.append("-ss 00:00:01")
+        cmd.append(" -i ")
+        cmd.append(videoClip.originalFilePath)
+//        cmd.append(" -vframes 1 -q:v 15 -vf \"scale=750:-1\" ")
+        cmd.append(" -vframes 1 ")
+        val outputImg = getVideoOutputParent() + "saveVideoFrames.png"
+        cmd.append(outputImg)
+//        cmd.append("-i ").append(videoClip.originalFilePath).append(" -vf \"fps=$FRAME_SAVE_FPS,scale=180:-1\" ").append(getOutputFramePath(videoFile.name))
+
+        val result = FFmpeg.execute(cmd.toString())
+        Log.d("edit_video_log","VideoEditorManager saveVideoFrames: end: result: $result, cmd: $cmd")
+    }
+
+    private fun getOutputFramePath(videoName: String): String {
+        val parentDir = getVideoOutputParent() + File.separator + videoName
+        val parentFile = File(parentDir)
+        if (!parentFile.exists()) {
+            parentFile.mkdirs()
+        }
+
+        return parentDir + File.separator + FRAME_NAME_FORMAT
+    }
+
     private fun onEditVideosFailed(msg: String = "-") {
         // todo fgc 停止编辑视频，通知任务失败相关的逻辑，并且删除相关过程中间产物
         Log.d("edit_video_log","VideoEditorManager apply callback, editvideos failed, $msg")
