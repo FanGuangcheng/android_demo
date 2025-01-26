@@ -61,6 +61,8 @@
         <activity android:name=".recycleview.SwapRecyclerViewAct"/>
 
         <activity android:name=".ffmpeg.VideoFfmpegAct"/>
+        <activity android:name=".mediacodec.MediaCodecAct"/>
+
     </application>
 
 </manifest>

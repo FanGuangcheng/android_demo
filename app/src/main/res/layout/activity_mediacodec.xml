@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:id="@+id/mediacodec_container"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:background="@color/gray_llight"
+        android:layout_height="200dp">
+
+        <TextView
+            android:id="@+id/tv_media_codec_output"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/btn_mediacodec_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MediaCodecList 查询"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/mediacodec_container"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_CodecCapabilities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CodecCapabilities 查询"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/btn_mediacodec_list"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

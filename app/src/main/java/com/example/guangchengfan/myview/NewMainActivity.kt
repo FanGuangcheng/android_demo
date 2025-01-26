@@ -10,6 +10,7 @@ import com.example.guangchengfan.myview.coordinatorlayout.CoorDinatorBehaviorAct
 import com.example.guangchengfan.myview.customview.SlidingTabLayout.SlidingTabLayoutActivity
 import com.example.guangchengfan.myview.ffmpeg.VideoFfmpegAct
 import com.example.guangchengfan.myview.imageload.LoadBigImgActivity
+import com.example.guangchengfan.myview.mediacodec.MediaCodecAct
 import com.example.guangchengfan.myview.qrcode.QrCodeActivity
 import com.example.guangchengfan.myview.recycleview.BRVAH.BRVAHRecycleViewActivity
 import com.example.guangchengfan.myview.recycleview.SwapRecyclerViewAct
@@ -36,6 +37,7 @@ class NewMainActivity: Activity() {
     lateinit var btn_viewpager2_demo: Button
     lateinit var btn_swap_act: Button
     lateinit var btn_ffmpeg_test: Button
+    lateinit var btn_mediacodec: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +101,11 @@ class NewMainActivity: Activity() {
         btn_ffmpeg_test = findViewById(R.id.btn_ffmpeg_test)
         btn_ffmpeg_test.setOnClickListener {
             startTargetActivity(VideoFfmpegAct::class.java)
+        }
+
+        btn_mediacodec = findViewById(R.id.btn_mediacodec)
+        btn_mediacodec.setOnClickListener {
+            startTargetActivity(MediaCodecAct::class.java)
         }
 
     }
